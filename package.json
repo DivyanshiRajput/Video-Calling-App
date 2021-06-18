@@ -1,0 +1,24 @@
+{
+  "name": "video-calling-app",
+  "version": "1.0.0",
+  "description": "video calling web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DivyanshiRajput/Video-Calling-App.git"
+  },
+  "author": "Divyanshi Rajput",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DivyanshiRajput/Video-Calling-App/issues"
+  },
+  "homepage": "https://github.com/DivyanshiRajput/Video-Calling-App#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}
