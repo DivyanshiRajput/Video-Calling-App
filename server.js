@@ -27,6 +27,10 @@ socketIo.on('connection', socket => {
         socket.join(roomId);
         socket.to(roomId).emit('user-connected', userId);
         console.log("joined room");
+
+        socket.on('message', function(message){
+            socketIo.to(roomId).emit('createMessage', message);
+        });
     });
 });
 
