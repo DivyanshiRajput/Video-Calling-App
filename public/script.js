@@ -9,7 +9,8 @@ var peer = new Peer(undefined, {
     port: '3000'
 });
 
-let myVideoStream
+let myVideoStream;
+
 navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true,
@@ -30,7 +31,20 @@ navigator.mediaDevices.getUserMedia({
     connectToNewUser(userId, stream);
     });
 
-    let text = $('input')
+    // socket.on('user-disconnected', (userId) => {
+    //     if (peers)
+    // })
+    
+    let text = $('#chat_message')
+
+    $("#send").click(() => {
+        if (text.val() != 0)
+        {
+            socket.emit('message', text.val());
+            text.val('');
+        }
+        
+    })
 
     $('html').keydown((e) => {
         if (e.which == 13 && text.val() != 0){
@@ -133,4 +147,37 @@ function videoFunction(){
         myVideoStream.getVideoTracks()[0].enabled = true;
     }
 }
+
+// chat toggle window
+const showChat = (e) => {
+    e.classList.toggle("active");
+    document.body.classList.toggle("showChat");
+};
+
+//invite link popup functions
+const showInvitePopup = () => {
+    if (document.getElementById("invite").classList.contains("showInvite")){
+        hideInvitePopup();
+    }
+    else{
+        document.getElementById("invite").classList.add("showInvite");
+        document.getElementById("roomLink").value = window.location.href;
+    }
+};
+
+const hideInvitePopup = () => {
+    document.getElementById("invite").classList.remove("showInvite");
+}
+
+const copyToClipboard = () => {
+    var copyText = document.getElementById("roomLink");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+
+    document.execCommand('copy');
+
+    alert("Copied: " + copyText.value );
+    hideInvitePopup();
+}
+
 

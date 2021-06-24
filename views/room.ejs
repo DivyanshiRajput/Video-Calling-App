@@ -26,10 +26,17 @@
 </head>
 <body>
     <div class="main">
-        <div class="main_left">
+        <div class="main_left" id="1">
+        <!-- video area -->
             <div class="main_videos">
                 <div id="video-grid">
                 
+                </div>
+            </div>
+            <div class="invitePop" id="invite">
+                <div class = "link_box">
+                    <input type="text" id="roomLink" readonly />
+                    <button class = "copy_button" onclick="copyToClipboard()">Copy</button>
                 </div>
             </div>
             <div class="main_controls">
@@ -49,35 +56,39 @@
                         <i class="fas fa-shield-alt"></i>
                         Security
                     </div>
-                    <div class="control_button">
+                    <div onclick = "showInvitePopup()" class="control_button">
                         <i class="fas fa-user-friends"></i>
-                        Participants
+                        Invite
                     </div>
-                    <div class="control_button">
+                    <div onclick="showChat(this)" class="control_button" id="chat_btn">
                         <i class="fas fa-comments"></i>
                         Chat
                     </div>
                 </div>
 
                 <div class="block">
-                    <div class="control_button" style="color: #eb534b;">
+                    <div class="control_button" style="color: #eb534b;" id="leave-meeting">
                         <i class="fas fa-sign-out-alt"></i>
                         Leave
                     </div>
                 </div>
             </div>
         </div>
-        <div class="main_right">
+        <div class="main_right" id="2">
+        <!-- chat area -->
             <div class="main_header">
                 <h6>Chat</h6>
             </div>
             <div class="chat_window">
-                <ul class="messages">
+                <ul class="messages" id="all_messages">
 
                 </ul>
             </div>
             <div class="message_container">
                 <input type="text" id="chat_message" placeholder="Write a message...">
+                <button class="sendMessage" id = "send"  type="submit">
+                    <i class="far fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
