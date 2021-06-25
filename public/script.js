@@ -3,6 +3,8 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
+const user = prompt("enter your name:");
+
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
@@ -10,11 +12,13 @@ var peer = new Peer(undefined, {
 });
 
 let myVideoStream;
+let currentUserId;
+let pendingMsg = 0;
+let peers = {};
+var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-navigator.mediaDevices.getUserMedia({
-    video: true,
-    audio: true,
-}).then(stream => {
+navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
+.then(stream => {
 
     myVideoStream = stream;
     addVideoStream(myVideo, stream);
@@ -24,18 +28,22 @@ navigator.mediaDevices.getUserMedia({
         const video = document.createElement('video');
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
+            console.log(peers);
         });
     });
 
     socket.on('user-connected', (userId) => {
-    connectToNewUser(userId, stream);
+        connectToNewUser(userId, stream);
     });
 
-    // socket.on('user-disconnected', (userId) => {
-    //     if (peers)
-    // })
+    socket.on('user-disconnected', (userId) => {
+        if (peers[userId]){
+            peers[userId].close();
+        }
+        speakText(`user ${userId} leaved`);
+    });
     
-    let text = $('#chat_message')
+    let text = $('#chat_message');
 
     $("#send").click(() => {
         if (text.val() != 0)
@@ -44,7 +52,7 @@ navigator.mediaDevices.getUserMedia({
             text.val('');
         }
         
-    })
+    });
 
     $('html').keydown((e) => {
         if (e.which == 13 && text.val() != 0){
@@ -52,40 +60,77 @@ navigator.mediaDevices.getUserMedia({
             socket.emit('message', text.val());
             text.val('')
         }
-    })
+    });
 
     socket.on('createMessage', function(message){
         
         $('ul').append(`<li class ="message"><b>user</b><br/>${message}</li>`)
         scrollBottom();
         console.log("this is coming from server");
-    })
-})
+    });
 
+    // socket.on("createMessage", (message, userName) => {
+    //     messages.innerHTML =
+    //         messages.innerHTML +
+    //         `<div class="message">
+    //             <b><i class="far fa-user-circle"></i> <span> ${
+    //             userName === user ? "me" : userName
+    //             }</span> </b>
+    //             <span>${message}</span>
+    //         </div>`;
+    // });
+});
+    
 peer.on('open', id => {
+    currentUserId = id;
     socket.emit('join-room', ROOM_ID, id);
-})
+});
+
+socket.on("disconnect", function(){
+    socket.emit("leave-room", ROOM_ID, currentUserId);
+});
 
 const connectToNewUser = (userId, stream) => {
     const call = peer.call(userId, stream);
     const video = document.createElement('video');
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream);
-    })
-}
+    });
 
-const addVideoStream = function(video, stream){
+    call.on('close', () => {
+        video.remove();
+    });
+
+    peers[userId] = call;
+};
+
+// const addVideoStream = function(video, stream){
+//     video.srcObject = stream;
+//     video.addEventListener('loadedmetadata', function(){
+//         video.play();
+//     });
+//     videoGrid.append(video);
+// }
+
+const addVideoStream = (video, stream, uId) => {
     video.srcObject = stream;
+    video.id = uId;
     video.addEventListener('loadedmetadata', function(){
         video.play();
     });
     videoGrid.append(video);
-}
+
+    let totalUsers = document.getElementsByTagName("video").length;
+    if(totalUsers > 1){
+        for (let i = 0; i < totalUsers; i++){
+            document.getElementsByTagName("video")[i].style.width = 100 / totalUsers + "%";
+        }}
+};
 
 const scrollBottom = () => {
     var d = $('.chat_window');
     d.scrollTop(d.prop("scrollHeight"));
-}
+};
 
 //functioning of mute button
 function setMuteButton(){
@@ -180,4 +225,21 @@ const copyToClipboard = () => {
     hideInvitePopup();
 }
 
+// function shareScreen() {
+//         if ( this.userMediaAvailable() ) {
+//             return navigator.mediaDevices.getDisplayMedia( {
+//                 video: {
+//                     cursor: "always"
+//                 },
+//                 audio: {
+//                     echoCancellation: true,
+//                     noiseSuppression: true,
+//                     sampleRate: 44100
+//                 }
+//             } );
+//         }
 
+//         else {
+//             throw new Error( 'User media not available' );
+//         }
+// }    
