@@ -1,13 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
+html{
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
 body {
   height: 100%;
+  background-color: #FBFBFB
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
@@ -19,7 +26,7 @@ body {
   width: 100%;
   align-items: center;
   flex-wrap: wrap;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 video {
@@ -43,36 +50,38 @@ video {
 }
 
 .main_right {
+  margin: 16px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
-  background-color: #242324;
-  border-left: 1px solid #3d3d42;
+  background-color: #F1F4F9;
+  /* border-left: 1px solid #3d3d42; */
   display: none;
 }
 
 .showChat .main_right {
   display: flex;
   flex: 0.25;
-}
-
-.active i {
-  color: #f00;
+  max-width: 375px;
 }
 
 .main_videos {
   flex-grow: 1;
-  background-color: #262626;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .main_controls {
+  color: #CCCCCC;
+  padding: 8px;
+  border-radius: 16px;
+  margin: 8px 16px 16px 16px;
   display: flex;
-  background-color: #1c1e20;
+  background-color: #F1F4F9;
   color: #d2d2d2;
-  padding: 5px;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .block {
@@ -84,10 +93,11 @@ video {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 8px 10px;
+  padding: 8px;
   min-width: 80px;
   cursor: pointer;
   font-size: 14px;
+  color: #394655;
 }
 
 .control_button i {
@@ -95,13 +105,22 @@ video {
 }
 
 .control_button:hover {
-  background-color: #343434;
+  background-color: white;
   border-radius: 5px;
 }
 
+.active i {
+  color: rgb(49, 117, 224);
+}
+
+.active .showInvite i{
+  color: rgb(49, 117, 224);
+}
+
 .main_header {
-  color: #f5f5f5;
+  color: black;
   text-align: center;
+  margin: 8px;
 }
 
 .chat_window {
@@ -110,19 +129,38 @@ video {
 }
 
 .message_container {
-  padding: 22px 12px;
   display: flex;
 }
 
 .message_container input {
   flex-grow: 1;
-  background-color: transparent;
-  border: none;
-  color: #f5f5f5;
-  user-select: none;
-  outline: none;
-  height: 50px;
-  padding-left: 20 px;
+  margin: 16px 0px 16px 16px;
+  padding: 10px;
+  background-color: #FFFFFF;
+  border: 0.5px solid #D7D7D7;
+  color: #000000;
+  border-radius: 15px;
+}
+
+input:focus {
+    outline: none !important;
+    border-color: #D7D7D7;
+    box-shadow: 0 0 8px #D7D7D7;
+}
+
+.messages{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+}
+
+.messages li{
+  color: #000000;
+  padding: 8px 8px 8px 16px;
+  border-radius: 8px;
+  background-color: white;
+  margin: 8px;
 }
 
 /* #all_messages li {
@@ -159,7 +197,7 @@ video {
   display: flex;
   width: 100%;
   height: 30px;
-  background-color: #262626;
+  background-color: white;
   color: #1c1e20;
 }
 
@@ -172,10 +210,20 @@ video {
 
 .copy_button {
   width: 100px;
+  border: none;
+  background-color: #394655;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  margin-left: 4px;
 }
 
 .link_box input {
-  width: 600px;
+  width: 550px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border-width: 0.25px;
+
 }
 
 @keyframes blink {
@@ -203,7 +251,7 @@ video {
   border: none;
   box-shadow: none;
   cursor: pointer;
-  color: #fff;
+  color: #0066F9;
 }
 
 @media (max-width: 640px) {

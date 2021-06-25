@@ -3,7 +3,7 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
-const user = prompt("enter your name:");
+// const User = prompt("enter your name:");
 
 var peer = new Peer(undefined, {
     path: '/peerjs',
@@ -42,7 +42,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
         }
         speakText(`user ${userId} leaved`);
     });
-    
+
     let text = $('#chat_message');
 
     $("#send").click(() => {
@@ -51,7 +51,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
             socket.emit('message', text.val());
             text.val('');
         }
-        
+
     });
 
     $('html').keydown((e) => {
@@ -63,8 +63,8 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
     });
 
     socket.on('createMessage', function(message){
-        
-        $('ul').append(`<li class ="message"><b>user</b><br/>${message}</li>`)
+
+        $('ul').append(`<li class ="message">User<br/>${message}</li>`)
         scrollBottom();
         console.log("this is coming from server");
     });
@@ -80,7 +80,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
     //         </div>`;
     // });
 });
-    
+
 peer.on('open', id => {
     currentUserId = id;
     socket.emit('join-room', ROOM_ID, id);
@@ -124,6 +124,8 @@ const addVideoStream = (video, stream, uId) => {
     if(totalUsers > 1){
         for (let i = 0; i < totalUsers; i++){
             document.getElementsByTagName("video")[i].style.width = 100 / totalUsers + "%";
+            // document.getElementsByTagName("video")[i].style.width = 50+ "%";
+            // document.getElementsByTagName("video")[i].style.height = 50 + "%";
         }}
 };
 
@@ -206,12 +208,14 @@ const showInvitePopup = () => {
     }
     else{
         document.getElementById("invite").classList.add("showInvite");
+        document.getElementById("invite_btn").classList.add("active");
         document.getElementById("roomLink").value = window.location.href;
     }
 };
 
 const hideInvitePopup = () => {
     document.getElementById("invite").classList.remove("showInvite");
+    document.getElementById("invite_btn").classList.remove("active");
 }
 
 const copyToClipboard = () => {
@@ -242,4 +246,4 @@ const copyToClipboard = () => {
 //         else {
 //             throw new Error( 'User media not available' );
 //         }
-// }    
+// }

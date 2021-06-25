@@ -30,7 +30,7 @@
         <!-- video area -->
             <div class="main_videos">
                 <div id="video-grid">
-                
+
                 </div>
             </div>
             <div class="invitePop" id="invite">
@@ -40,38 +40,38 @@
                 </div>
             </div>
             <div class="main_controls">
-                <div class="block">
+                <!-- <div class="block"> -->
                     <div onclick="muteFunction()" class="control_button mute">
                         <i class="fas fa-microphone"></i>
                         <span>Mute</span>
                     </div>
                     <div onclick="videoFunction()" class="control_button video">
-                        <i class="fas fa-video" aria-hidden="true"></i>
+                        <i class="fas fa-video"></i>
                         Stop Video
                     </div>
-                </div>
+                <!-- </div> -->
 
-                <div class="block">
+                <!-- <div class="block"> -->
                     <div onclick="shareScreen()" class="control_button">
-                        <i class="fas fa-shield-alt"></i>
-                        Security
+                        <i class="fas fa-sun"></i>
+                        Light Mode
                     </div>
-                    <div onclick = "showInvitePopup()" class="control_button">
-                        <i class="fas fa-user-friends"></i>
+                    <div onclick = "showInvitePopup()" class="control_button" id="invite_btn">
+                        <i class="fas fa-user-plus"></i>
                         Invite
                     </div>
                     <div onclick="showChat(this)" class="control_button" id="chat_btn">
-                        <i class="fas fa-comments"></i>
+                        <i class="fas fa-comment-alt"></i>
                         Chat
                     </div>
-                </div>
+                <!-- </div> -->
 
-                <div class="block">
+                <!-- <div class="block"> -->
                     <div class="control_button" style="color: #eb534b;" id="leave-meeting">
                         <i class="fas fa-sign-out-alt"></i>
                         Leave
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div class="main_right" id="2">
