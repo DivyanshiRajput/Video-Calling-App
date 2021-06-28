@@ -47,29 +47,30 @@
                     </div>
                     <div onclick="videoFunction()" class="control_button video">
                         <i class="fas fa-video"></i>
-                        Stop Video
+                        <span>Stop Video</span>
                     </div>
                 <!-- </div> -->
 
                 <!-- <div class="block"> -->
-                    <div onclick="shareScreen()" class="control_button">
-                        <i class="fas fa-sun"></i>
-                        Light Mode
+                    <div onclick="darkLight()" class="control_button" id="mode">
+                        <i class="fas fa-moon"></i>
+                        <!-- <label onclick="darkLight(this)" class="switch"><input type="checkbox" checked><span class="slider round"></span></label> -->
+                        <span>Dark Mode</span>
                     </div>
                     <div onclick = "showInvitePopup()" class="control_button" id="invite_btn">
                         <i class="fas fa-user-plus"></i>
-                        Invite
+                        <span>Invite</span>
                     </div>
                     <div onclick="showChat(this)" class="control_button" id="chat_btn">
                         <i class="fas fa-comment-alt"></i>
-                        Chat
+                        <span>Chat</span>
                     </div>
                 <!-- </div> -->
 
                 <!-- <div class="block"> -->
                     <div class="control_button" style="color: #eb534b;" id="leave-meeting">
                         <i class="fas fa-sign-out-alt"></i>
-                        Leave
+                        <span>Leave</span>
                     </div>
                 <!-- </div> -->
             </div>

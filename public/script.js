@@ -3,7 +3,7 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
-// const User = prompt("enter your name:");
+const user = prompt("enter your name:");
 
 var peer = new Peer(undefined, {
     path: '/peerjs',
@@ -12,10 +12,11 @@ var peer = new Peer(undefined, {
 });
 
 let myVideoStream;
-let currentUserId;
-let pendingMsg = 0;
-let peers = {};
-var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+// let currentUserId;
+// let currentUserName;
+// let pendingMsg = 0;
+// let peers = {};
+// var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
 .then(stream => {
@@ -36,58 +37,12 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
         connectToNewUser(userId, stream);
     });
 
-    socket.on('user-disconnected', (userId) => {
-        if (peers[userId]){
-            peers[userId].close();
-        }
-        speakText(`user ${userId} leaved`);
-    });
-
-    let text = $('#chat_message');
-
-    $("#send").click(() => {
-        if (text.val() != 0)
-        {
-            socket.emit('message', text.val());
-            text.val('');
-        }
-
-    });
-
-    $('html').keydown((e) => {
-        if (e.which == 13 && text.val() != 0){
-            console.log(text.val());
-            socket.emit('message', text.val());
-            text.val('')
-        }
-    });
-
-    socket.on('createMessage', function(message){
-
-        $('ul').append(`<li class ="message">User<br/>${message}</li>`)
-        scrollBottom();
-        console.log("this is coming from server");
-    });
-
-    // socket.on("createMessage", (message, userName) => {
-    //     messages.innerHTML =
-    //         messages.innerHTML +
-    //         `<div class="message">
-    //             <b><i class="far fa-user-circle"></i> <span> ${
-    //             userName === user ? "me" : userName
-    //             }</span> </b>
-    //             <span>${message}</span>
-    //         </div>`;
+    // socket.on('user-disconnected', (userId) => {
+    //     if (peers[userId]){
+    //         peers[userId].close();
+    //     }
+    //     speakText(`user ${userId} leaved`);
     // });
-});
-
-peer.on('open', id => {
-    currentUserId = id;
-    socket.emit('join-room', ROOM_ID, id);
-});
-
-socket.on("disconnect", function(){
-    socket.emit("leave-room", ROOM_ID, currentUserId);
 });
 
 const connectToNewUser = (userId, stream) => {
@@ -96,39 +51,80 @@ const connectToNewUser = (userId, stream) => {
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream);
     });
+    // call.on('close', () => {
+    //     video.remove();
+    // });
 
-    call.on('close', () => {
-        video.remove();
-    });
-
-    peers[userId] = call;
+    // peers[userId] = call;
 };
 
-// const addVideoStream = function(video, stream){
-//     video.srcObject = stream;
-//     video.addEventListener('loadedmetadata', function(){
-//         video.play();
-//     });
-//     videoGrid.append(video);
-// }
+peer.on('open', id => {
+    currentUserId = id;
+    socket.emit('join-room', ROOM_ID, id, user);
+});
 
-const addVideoStream = (video, stream, uId) => {
+// socket.on("disconnect", function(){
+//     socket.emit("leave-room", ROOM_ID, currentUserId);
+// });
+
+const addVideoStream = function(video, stream){
     video.srcObject = stream;
-    video.id = uId;
     video.addEventListener('loadedmetadata', function(){
         video.play();
     });
     videoGrid.append(video);
+}
 
-    let totalUsers = document.getElementsByTagName("video").length;
-    if(totalUsers > 1){
-        for (let i = 0; i < totalUsers; i++){
-            document.getElementsByTagName("video")[i].style.width = 100 / totalUsers + "%";
-            // document.getElementsByTagName("video")[i].style.width = 50+ "%";
-            // document.getElementsByTagName("video")[i].style.height = 50 + "%";
-        }}
-};
+// const addVideoStream = (video, stream, uId) => {
+//     video.srcObject = stream;
+//     video.id = uId;
+//     video.addEventListener('loadedmetadata', function(){
+//         video.play();
+//     });
+//     videoGrid.append(video);
+//
+//     let totalUsers = document.getElementsByTagName("video").length;
+//     if(totalUsers > 1){
+//         for (let i = 0; i < totalUsers; i++){
+//             document.getElementsByTagName("video")[i].style.width = 100 / totalUsers + "%";
+//             // document.getElementsByTagName("video")[i].style.width = 50+ "%";
+//             // document.getElementsByTagName("video")[i].style.height = 50 + "%";
+//         }}
+// };
 
+let text = $('#chat_message');
+
+$("#send").click(() => {
+    if (text.val() != 0)
+    {
+        socket.emit('message', text.val());
+        text.val('');
+    }
+
+});
+
+$('html').keydown((e) => {
+  if (e.which == 13 && text.val() != 0){
+      console.log(text.val());
+      socket.emit('message', text.val());
+      text.val('')
+  }
+});
+
+socket.on('createMessage', function(message, userName){
+  $('ul').append(`<li class ="message">user<br/>${message}</li>`);
+  // if (userName === user){
+  //   $('ul').append(`<li class ="message">me<br/>${message}</li>`);
+  // }
+  // else{
+  //   $('ul').append(`<li class ="message">${userName}<br/>${message}</li>`);
+  // }
+
+  scrollBottom();
+  console.log("this is coming from server");
+  });
+
+// scroll function for chat box
 const scrollBottom = () => {
     var d = $('.chat_window');
     d.scrollTop(d.prop("scrollHeight"));
@@ -193,6 +189,25 @@ function videoFunction(){
         stopVideo();
         myVideoStream.getVideoTracks()[0].enabled = true;
     }
+}
+
+// dark mode and light mode
+const darkLight = () =>{
+  document.body.classList.toggle("dark-mode");
+  if (document.body.classList.contains("dark-mode")){
+    const html = `
+    <i class="fas fa-sun"></i>
+    <span> Light Mode </span>
+    `
+    document.querySelector('#mode').innerHTML = html;
+  }
+  else {
+    const html = `
+    <i class="fas fa-moon"></i>
+    <span> Dark Mode </span>
+    `
+    document.querySelector('#mode').innerHTML = html;
+  }
 }
 
 // chat toggle window

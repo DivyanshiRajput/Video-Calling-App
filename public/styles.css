@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-html{
+html {
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -14,10 +14,23 @@ html{
 
 body {
   height: 100%;
-  background-color: #FBFBFB
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #FFFFFF;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
 }
+
+body.dark-mode {
+    background-color: #202124;
+    color: #202124;
+  }
+
+/*
+#202124 - background
+#3C4043 - foreground
+#FFFFFF - icon buttons
+#E8453C - cut/ red
+#2571D5 - send blue
+#434649 - button hover color
+ */
 
 #video-grid {
   display: flex;
@@ -54,10 +67,14 @@ video {
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  background-color: #F1F4F9;
+  background-color: #f1f4f9;
   /* border-left: 1px solid #3d3d42; */
   display: none;
 }
+
+body.dark-mode .main_right{
+    background-color: #3C4043;
+  }
 
 .showChat .main_right {
   display: flex;
@@ -73,16 +90,23 @@ video {
   align-items: center;
 }
 
+body.dark-mode .main_videos{
+    background-color: #202124;
+  }
+
 .main_controls {
-  color: #CCCCCC;
   padding: 8px;
   border-radius: 16px;
   margin: 8px 16px 16px 16px;
   display: flex;
-  background-color: #F1F4F9;
+  background-color: #f1f4f9;
   color: #d2d2d2;
   justify-content: center;
 }
+
+body.dark-mode .main_controls{
+    background-color: #3C4043;
+  }
 
 .block {
   display: flex;
@@ -100,6 +124,11 @@ video {
   color: #394655;
 }
 
+body.dark-mode .control_button{
+    color: #FFFFFF;
+  }
+
+
 .control_button i {
   font-size: 24px;
 }
@@ -109,11 +138,15 @@ video {
   border-radius: 5px;
 }
 
+body.dark-mode .control_button:hover{
+    background-color: #434649;
+  }
+
 .active i {
   color: rgb(49, 117, 224);
 }
 
-.active .showInvite i{
+.active .showInvite i {
   color: rgb(49, 117, 224);
 }
 
@@ -121,6 +154,10 @@ video {
   color: black;
   text-align: center;
   margin: 8px;
+}
+
+body.dark-mode .main_header {
+  color: #FFFFFF;
 }
 
 .chat_window {
@@ -136,31 +173,58 @@ video {
   flex-grow: 1;
   margin: 16px 0px 16px 16px;
   padding: 10px;
-  background-color: #FFFFFF;
-  border: 0.5px solid #D7D7D7;
+  background-color: #ffffff;
+  border: 0.5px solid #d7d7d7;
   color: #000000;
   border-radius: 15px;
 }
 
-input:focus {
-    outline: none !important;
-    border-color: #D7D7D7;
-    box-shadow: 0 0 8px #D7D7D7;
+/* #202124 - background
+#3C4043 - foreground
+#FFFFFF - icon buttons
+#E8453C - cut/ red
+#2571D5 - send blue
+#434649 - button hover color
+#6D767D - a lighter foreground
+*/
+
+body.dark-mode .message_container input {
+  background-color: #202124;
+  border: 0.5px solid #434649;
+  color: #ffffff;
 }
 
-.messages{
+.message_container input:focus {
+  outline: none !important;
+  border-color: #D7D7D7;
+  box-shadow: 0 0 3px #D7D7D7;
+}
+
+body.dark-mode .message_container input:focus {
+  outline: none !important;
+  border-color: #434649;
+  box-shadow: 0 0 3px #6D767D;
+}
+
+
+.messages {
   list-style: none;
   margin: 0;
   padding: 0;
   word-wrap: break-word;
 }
 
-.messages li{
+.messages li {
   color: #000000;
   padding: 8px 8px 8px 16px;
   border-radius: 8px;
   background-color: white;
   margin: 8px;
+}
+
+body.dark-mode .messages li {
+  color: #FFFFFF;
+  background-color: #5C6267;
 }
 
 /* #all_messages li {
@@ -198,7 +262,12 @@ input:focus {
   width: 100%;
   height: 30px;
   background-color: white;
-  color: #1c1e20;
+  color: #000000;
+}
+
+body.dark-mode .showInvite {
+  background-color: #202124;
+  color: #FFFFFF;
 }
 
 .link_box {
@@ -212,18 +281,28 @@ input:focus {
   width: 100px;
   border: none;
   background-color: #394655;
-  color: white;
+  color: #FFFFFF;
   padding: 4px 8px;
   border-radius: 5px;
   margin-left: 4px;
 }
+
+body.dark-mode .showInvite {
+  background-color: #202124;
+  color: #FFFFFF;
+}
+
+
+body.dark-mode .copy_button {
+  background-color: #3C4043;
+}
+
 
 .link_box input {
   width: 550px;
   padding: 4px 8px;
   border-radius: 5px;
   border-width: 0.25px;
-
 }
 
 @keyframes blink {
@@ -251,7 +330,7 @@ input:focus {
   border: none;
   box-shadow: none;
   cursor: pointer;
-  color: #0066F9;
+  color: #0066f9;
 }
 
 @media (max-width: 640px) {
