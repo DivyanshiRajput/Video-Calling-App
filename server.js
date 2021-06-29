@@ -22,6 +22,10 @@ app.get('/:room', function(req, res){
     res.render('room', {roomId: req.params.room});
 });
 
+app.get('/:room/leave', function(req, res){
+    res.render('leave');
+})
+
 socketIo.on('connection', socket => {
     socket.on('join-room', (roomId, userId, userName) => {
         socket.join(roomId);
@@ -29,7 +33,7 @@ socketIo.on('connection', socket => {
         console.log("joined room");
 
         socket.on('message', function(message){
-            socketIo.to(roomId).emit('createMessage', message, userName;
+            socketIo.to(roomId).emit('createMessage', message, userName);
         });
     });
 });

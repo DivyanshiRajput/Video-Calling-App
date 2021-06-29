@@ -143,11 +143,11 @@ body.dark-mode .control_button:hover{
   }
 
 .active i {
-  color: rgb(49, 117, 224);
+  color: #3888F6;
 }
 
 .active .showInvite i {
-  color: rgb(49, 117, 224);
+  color: #3888F6;
 }
 
 .main_header {
@@ -212,20 +212,46 @@ body.dark-mode .message_container input:focus {
   margin: 0;
   padding: 0;
   word-wrap: break-word;
+
+  width: auto
 }
 
-.messages li {
+/* .messages li {
   color: #000000;
   padding: 8px 8px 8px 16px;
   border-radius: 8px;
   background-color: white;
-  margin: 8px;
+  margin: 8px 8px 8px 8px;
+} */
+
+.messageRight {
+  color: #FFFFFF;
+  padding: 8px 8px 8px 16px;
+  border-radius: 8px;
+  background-color: #3888F6;
+  margin: 8px 8px 8px 60px;
 }
 
-body.dark-mode .messages li {
+.messageLeft {
+  color: #000000;
+  padding: 8px 8px 8px 16px;
+  border-radius: 8px;
+  background-color: white;
+  margin: 8px 60px 8px 8px
+}
+
+
+body.dark-mode .messageRight{
+  color: #FFFFFF;
+  background-color: #3888F6;
+}
+
+body.dark-mode .messageLeft{
   color: #FFFFFF;
   background-color: #5C6267;
 }
+
+
 
 /* #all_messages li {
   color: #fff;

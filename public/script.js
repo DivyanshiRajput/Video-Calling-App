@@ -29,7 +29,6 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
         const video = document.createElement('video');
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
-            console.log(peers);
         });
     });
 
@@ -73,6 +72,7 @@ const addVideoStream = function(video, stream){
         video.play();
     });
     videoGrid.append(video);
+    // location.reload();
 }
 
 // const addVideoStream = (video, stream, uId) => {
@@ -112,13 +112,13 @@ $('html').keydown((e) => {
 });
 
 socket.on('createMessage', function(message, userName){
-  $('ul').append(`<li class ="message">user<br/>${message}</li>`);
-  // if (userName === user){
-  //   $('ul').append(`<li class ="message">me<br/>${message}</li>`);
-  // }
-  // else{
-  //   $('ul').append(`<li class ="message">${userName}<br/>${message}</li>`);
-  // }
+//   $('ul').append(`<li class ="message">user<br/>${message}</li>`);
+  if (userName === user){
+    $('ul').append(`<li class ="messageRight">me<br/>${message}</li>`);
+  }
+  else{
+    $('ul').append(`<li class ="messageLeft">${userName}<br/>${message}</li>`);
+  }
 
   scrollBottom();
   console.log("this is coming from server");
@@ -262,3 +262,11 @@ const copyToClipboard = () => {
 //             throw new Error( 'User media not available' );
 //         }
 // }
+
+function leave(){
+  // if (confirm("Close Window?")) {
+  //   window.top.close();
+  // }
+
+  window.location += '/leave';
+}
