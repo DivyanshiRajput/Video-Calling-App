@@ -18,7 +18,7 @@ let myVideoStream;
 // let peers = {};
 // var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
+navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
 .then(stream => {
 
     myVideoStream = stream;
@@ -87,8 +87,8 @@ const addVideoStream = function(video, stream){
 //     if(totalUsers > 1){
 //         for (let i = 0; i < totalUsers; i++){
 //             document.getElementsByTagName("video")[i].style.width = 100 / totalUsers + "%";
-//             // document.getElementsByTagName("video")[i].style.width = 50+ "%";
-//             // document.getElementsByTagName("video")[i].style.height = 50 + "%";
+//             document.getElementsByTagName("video")[i].style.width = 50+ "%";
+//             document.getElementsByTagName("video")[i].style.height = 50 + "%";
 //         }}
 // };
 
