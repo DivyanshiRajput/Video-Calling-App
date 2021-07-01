@@ -1,5 +1,51 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
+/* rating feedback */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+  margin-top: 10px;
+  border: none;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 5px;
+  font-size: 2em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+ float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+/* rating feedback stars */
+
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -22,6 +68,7 @@ body {
   margin-top: 50px;
   width: 25%;
   padding: 10px;
+  min-width: 360px;
 }
 
 .heading {
@@ -32,7 +79,6 @@ body {
 .feedback{
   box-shadow: 0px 1px 2px 0px rgb(60 64 67 / 30%), 0px 2px 6px 2px rgb(60 64 67 / 15%);
   border-radius: 8px;
-  height: 150px;
   padding: 24px 24px;
 }
 
@@ -41,7 +87,9 @@ body {
 }
 
 .feedback-answer{
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttons{
@@ -59,145 +107,3 @@ body {
   padding: 4px 8px;
   border-radius: 5px;
 }
-/*
-@import url("https://fonts.googleapis.com/css?family=Raleway");
-$fontFamily: "Raleway", sans-serif;
-@function rem($value) {
-  @return unquote(($value/1px)/16+"rem");
-}
-
-
-.container {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-:root{
-  var(--color, #fcda6a);
-  var(--color2, #212121);
-  var(--reactions, "like", "love", "haha", "wow", "sad", "angry);
-  var(--white, #fffff);
-  var(--boxShadow, 0px 0px 20px rgba(0, 0, 0, 0.2);
-  var(--duration, 0.2);
-}
-
-
-.fbRatingCard {
-  display: flex;
-  padding: rem(10px) rem(30px) rem(50px);
-  background-color: var(--white);
-  box-shadow: var(--boxShadow);
-  overflow: hidden;
-  border-radius: rem(8px);
-  .cardContainer {
-    position: relative;
-    padding: rem(200px) rem(40px) rem(20px);
-    .icon {
-      height: rem(100px);
-      width: rem(100px);
-      position: absolute;
-      top: rem(20px);
-      left: 0;
-      right: 0;
-      margin: auto;
-      margin-bottom: rem(40px);
-      background-image: url("https://proximomarketing.com/wp-content/uploads/2017/05/reactions-reactions.png");
-      background-size: rem(740px);
-      background-repeat: no-repeat;
-      border-radius: 500px;
-      transition: all ease var(--duration);
-      border: rem(10px) solid var(--white);
-      box-shadow: var(--boxShadow);
-      &::after {
-        content: "Rate Us";
-        position: absolute;
-        bottom: rem(-45px);
-        left: 0;
-        right: 0;
-        margin: auto;
-        text-align: center;
-        font-size: rem(20px);
-        text-transform: capitalize;
-        font-weight: 600;
-        color: var(--color2);
-      }
-    }
-
-    input[type="radio"] {
-      display: none;
-      & + label {
-        display: inline-flex;
-        height: rem(20px);
-        width: rem(20px);
-        margin: 0 rem(10px);
-        border-radius: 500px;
-        background-color: var(--color2);
-        position: relative;
-        &:hover{
-          cursor:pointer;
-        }
-        &::after {
-          content: "";
-          position: absolute;
-          height: rem(10px);
-          width: rem(10px);
-          background-color: var(--color);
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          margin: auto;
-          border-radius: 500px;
-          transform: scale(0);
-          transition: all ease var(--duration);
-        }
-      }
-    }
-
-    @each $reaction in $reactions {
-      $index: index($reactions, $reaction);
-      input[type="radio"]##{$reaction}:checked {
-        & + label {
-          &::after {
-            transform: scale(1);
-          }
-        }
-        & ~ .icon {
-          background-position: rem(-($index - 1) * 128px) 0;
-          &::after {
-            content: $reaction;
-          }
-        }
-      }
-    }
-  }
-
-  .submit-btn {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: rem(-35px);
-    margin: auto;
-    padding: rem(10px) rem(40px);
-    display: inline-flex;
-    border-radius: rem(4px);
-    border: none;
-    background-color: var(--color2);
-    color: var(--color);
-    font-family: $fontFamily;
-    text-transform: uppercase;
-    box-shadow: var(--boxShadow);
-    font-size: rem(16px);
-    &:hover {
-      background-color: lighten(var(--color2), 10%);
-      cursor: pointer;
-    }
-  }
-} */
