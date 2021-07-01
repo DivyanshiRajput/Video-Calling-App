@@ -15,6 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
         integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
         crossorigin="anonymous"></script>
+
+
 </head>
 
 <body>
@@ -25,45 +27,41 @@
 
     <div class="buttons" >
       <button onclick="rejoin()" type="button" class="rejoin-button"> Rejoin </button>
-      <!-- <button type="button" name="button"></button> -->
     </div>
 
     <div class="feedback">
-
-<!-- <div class="container">
-  <div class="fbRatingCard">
-    <form action="#">
-      <div class="cardContainer">
-        <input type="radio"  id="like" name="rating" checked>
-        <label for="like"></label>
-        <input type="radio"id="love" name="rating">
-        <label for="love"></label>
-        <input type="radio" id="haha" name="rating">
-        <label for="haha"></label>
-        <input type="radio"id="wow" name="rating">
-        <label for="wow"></label>
-        <input type="radio" id="sad" name="rating">
-        <label for="sad"></label>
-        <input type="radio" id="angry" name="rating">
-        <label for="angry"></label>
-        <div class="icon">
-
-        </div>
-        <button class="submit-btn" type="submit">Submit</button>
-      </div>
-    </form>
-  </div>
-</div> -->
-
       <div class="feedback-question">
         Rate your experience
       </div>
 
       <div class="feedback-answer">
+        <fieldset class="rating">
+            <input type="radio" id="star5" name="rating" value=5 /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+            <input type="radio" id="star4half" name="rating" value=4.5 /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+            <input type="radio" id="star4" name="rating" value=4 /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+            <input type="radio" id="star3half" name="rating" value=3.5 /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+            <input type="radio" id="star3" name="rating" value=3 /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+            <input type="radio" id="star2half" name="rating" value=2.5 /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+            <input type="radio" id="star2" name="rating" value=2 /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+            <input type="radio" id="star1half" name="rating" value=1.5 /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+            <input type="radio" id="star1" name="rating" value=1 /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+            <input type="radio" id="starhalf" name="rating" value=0.5 /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+        </fieldset>
+      </div> <!-- feedback answers -->
 
+      <div class="buttons" >
+          <button onclick="addFeedback()" type="button" class="rejoin-button"> Submit </button>
       </div>
+
     </div>
+
   </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+  <script src="../db.js"></script>
   <script src="../leave.js"></script>
 </body>
 </html>
