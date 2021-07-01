@@ -12,11 +12,6 @@ var peer = new Peer(undefined, {
 });
 
 let myVideoStream;
-// let currentUserId;
-// let currentUserName;
-// let pendingMsg = 0;
-// let peers = {};
-// var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
 .then(stream => {
@@ -35,13 +30,6 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
     socket.on('user-connected', (userId) => {
         connectToNewUser(userId, stream);
     });
-
-    // socket.on('user-disconnected', (userId) => {
-    //     if (peers[userId]){
-    //         peers[userId].close();
-    //     }
-    //     speakText(`user ${userId} leaved`);
-    // });
 });
 
 const connectToNewUser = (userId, stream) => {
@@ -50,11 +38,6 @@ const connectToNewUser = (userId, stream) => {
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream);
     });
-    // call.on('close', () => {
-    //     video.remove();
-    // });
-
-    // peers[userId] = call;
 };
 
 peer.on('open', id => {
@@ -62,9 +45,9 @@ peer.on('open', id => {
     socket.emit('join-room', ROOM_ID, id, user);
 });
 
-// socket.on("disconnect", function(){
-//     socket.emit("leave-room", ROOM_ID, currentUserId);
-// });
+function leave(){
+  window.location += '/leave';
+}
 
 const addVideoStream = function(video, stream){
     video.srcObject = stream;
@@ -72,7 +55,6 @@ const addVideoStream = function(video, stream){
         video.play();
     });
     videoGrid.append(video);
-    // location.reload();
 }
 
 // const addVideoStream = (video, stream, uId) => {
@@ -112,7 +94,6 @@ $('html').keydown((e) => {
 });
 
 socket.on('createMessage', function(message, userName){
-//   $('ul').append(`<li class ="message">user<br/>${message}</li>`);
   if (userName === user){
     $('ul').append(`<li class ="messageRight">me<br/>${message}</li>`);
   }
@@ -248,7 +229,7 @@ const copyToClipboard = () => {
 //         if ( this.userMediaAvailable() ) {
 //             return navigator.mediaDevices.getDisplayMedia( {
 //                 video: {
-//                     cursor: "always"
+//                    cursor: "always"
 //                 },
 //                 audio: {
 //                     echoCancellation: true,
@@ -262,11 +243,3 @@ const copyToClipboard = () => {
 //             throw new Error( 'User media not available' );
 //         }
 // }
-
-function leave(){
-  // if (confirm("Close Window?")) {
-  //   window.top.close();
-  // }
-
-  window.location += '/leave';
-}

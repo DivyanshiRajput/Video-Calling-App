@@ -31,12 +31,14 @@ body.dark-mode {
  */
 
 #video-grid {
+
   display: flex;
   justify-content: center;
   height: 100%;
   width: 100%;
   align-items: center;
   flex-wrap: wrap;
+  grid-template-columns: repeat(12, 1fr);
   /* overflow-y: auto; */
 }
 
@@ -245,8 +247,6 @@ body.dark-mode .messageLeft{
   color: #FFFFFF;
   background-color: #5C6267;
 }
-
-
 
 /* #all_messages li {
   color: #fff;
