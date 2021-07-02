@@ -30,61 +30,60 @@
         <!-- video area -->
             <div class="main_videos">
                 <div id="video-grid">
-
                 </div>
             </div>
+
             <div class="invitePop" id="invite">
                 <div class = "link_box">
                     <input type="text" id="roomLink" readonly />
                     <button class = "copy_button" onclick="copyToClipboard()">Copy</button>
                 </div>
             </div>
+
             <div class="main_controls">
-                <!-- <div class="block"> -->
                     <div onclick="muteFunction()" class="control_button mute">
                         <i class="fas fa-microphone"></i>
                         <span>Mute</span>
                     </div>
+
                     <div onclick="videoFunction()" class="control_button video">
                         <i class="fas fa-video"></i>
                         <span>Stop Video</span>
                     </div>
-                <!-- </div> -->
 
-                <!-- <div class="block"> -->
                     <div onclick="darkLight()" class="control_button" id="mode">
                         <i class="fas fa-moon"></i>
-                        <!-- <label onclick="darkLight(this)" class="switch"><input type="checkbox" checked><span class="slider round"></span></label> -->
                         <span>Dark Mode</span>
                     </div>
+
                     <div onclick = "showInvitePopup()" class="control_button" id="invite_btn">
                         <i class="fas fa-user-plus"></i>
                         <span>Invite</span>
                     </div>
+
                     <div onclick="showChat(this)" class="control_button" id="chat_btn">
                         <i class="fas fa-comment-alt"></i>
                         <span>Chat</span>
                     </div>
-                <!-- </div> -->
 
-                <!-- <div class="block"> -->
                     <div onclick="leave()" class="control_button" style="color: #eb534b;" id="leave-meeting">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Leave</span>
                     </div>
-                <!-- </div> -->
             </div>
         </div>
+
         <div class="main_right" id="2">
         <!-- chat area -->
             <div class="main_header">
                 <h6>Chat</h6>
             </div>
+
             <div class="chat_window">
                 <ul class="messages" id="all_messages">
-
                 </ul>
             </div>
+
             <div class="message_container">
                 <input type="text" id="chat_message" placeholder="Write a message...">
                 <button class="sendMessage" id = "send"  type="submit">
