@@ -3,7 +3,9 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
-const user = prompt("enter your name:");
+const user = prompt("Enter your name:");
+
+var currentUserId;
 
 var peer = new Peer(undefined, {
     path: '/peerjs',
@@ -22,30 +24,52 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
     peer.on('call', call => {
         call.answer(stream);
         const video = document.createElement('video');
+        // changes
+        // video.setAttribute('id', currentUserId);
+
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
         });
+
+        // call.on('close'{
+        //   peer.close();
+        //   video.remove;
+        // })
     });
 
     socket.on('user-connected', (userId) => {
         connectToNewUser(userId, stream);
     });
+
+    // socket.on('leave-room', userId => {
+    //   var vidObj = document.getElementById(userId);
+    //   vidObj.remove();
+    // });
 });
 
 const connectToNewUser = (userId, stream) => {
     const call = peer.call(userId, stream);
     const video = document.createElement('video');
+    // changes
+    // video.setAttribute('id', userId);
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream);
     });
 };
 
 peer.on('open', id => {
-    currentUserId = id;
     socket.emit('join-room', ROOM_ID, id, user);
 });
 
+// peer.on('close', id => {
+//   socket.emit
+// })
+
 function leave(){
+  alert("Are you sure you want to leave?");
+
+  // changes here
+  // socket.broadcast.emit('leave-meeting', currentUserId);
   window.location += '/leave';
 }
 
