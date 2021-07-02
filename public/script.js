@@ -20,57 +20,63 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
 
     myVideoStream = stream;
     addVideoStream(myVideo, stream);
+    document.getElementsByTagName("video")[0].setAttribute("id", currentUserId);
 
     peer.on('call', call => {
         call.answer(stream);
         const video = document.createElement('video');
-        // changes
-        // video.setAttribute('id', currentUserId);
+        video.setAttribute('id', call.peer);
 
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
         });
 
-        // call.on('close'{
-        //   peer.close();
-        //   video.remove;
-        // })
     });
 
     socket.on('user-connected', (userId) => {
         connectToNewUser(userId, stream);
     });
 
-    // socket.on('leave-room', userId => {
-    //   var vidObj = document.getElementById(userId);
-    //   vidObj.remove();
-    // });
+    socket.on('user-disconnected', (userId, userName) => {
+        disconnectUser(userId, stream);
+    })
+
 });
 
 const connectToNewUser = (userId, stream) => {
     const call = peer.call(userId, stream);
     const video = document.createElement('video');
     // changes
-    // video.setAttribute('id', userId);
+    video.setAttribute('id', userId);
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream);
     });
 };
 
+const disconnectUser = (userId, stream) => {
+  if (document.getElementById(userId) != null){
+      document.getElementById(userId).remove();
+  }
+}
+
 peer.on('open', id => {
+    console.log("1");
+    currentUserId = id;
     socket.emit('join-room', ROOM_ID, id, user);
+
 });
 
-// peer.on('close', id => {
-//   socket.emit
-// })
+peer.on('close', id => {
+    socket.emit ('disconnect', id);
+})
 
 function leave(){
-  alert("Are you sure you want to leave?");
-
-  // changes here
-  // socket.broadcast.emit('leave-meeting', currentUserId);
-  window.location += '/leave';
+    if (window.confirm("Are you sure you want to leave the room?")){
+        window.location += '/leave';
+    }
+    else{
+        return;
+    }
 }
 
 const addVideoStream = function(video, stream){

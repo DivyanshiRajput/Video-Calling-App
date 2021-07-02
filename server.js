@@ -32,18 +32,19 @@ app.get('/:room/leave', function(req, res){
 
 socketIo.on('connection', socket => {
 
-        socket.on('join-room', (roomId, userId, userName) => {
-        socket.join(roomId);
-        socket.to(roomId).emit('user-connected', userId, userName);
-        console.log("joined room");
+    socket.on('join-room', (roomId, userId, userName) => {
+      socket.join(roomId);
+      socket.to(roomId).emit('user-connected', userId, userName);
+      console.log("joined room");
 
-        socket.on('message', function(message){
-            socketIo.to(roomId).emit('createMessage', message, userName);
-        });
+      socket.on('message', function(message){
+        socketIo.to(roomId).emit('createMessage', message, userName);
+      });
 
-        // socket.on('disconnect', (reason) => {
-        // socket.broadcast.emit('client-disconnected', { 'client-id': socket.id });
-        // });
+      socket.on('disconnect', id => {
+        socket.to(roomId).emit('user-disconnected', userId, userName);
+        console.log ("user disconnected");
+      });
     });
 });
 
