@@ -119,3 +119,10 @@ body {
   border-color:  #394655;
   width: 200px;
 }
+
+.rated{
+  color: #717171;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+}

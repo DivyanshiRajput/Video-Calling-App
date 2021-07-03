@@ -1,10 +1,26 @@
+var firebaseConfig = FIREBASE_CONFIG;
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const avg_ref = db.ref('Average/avg');
+avg_ref.on('value',(snap)=>{
+  document.getElementById('rating').innerHTML = 'Rated ' +  snap.val().toFixed(1) + '/5.0 ★';
+});
+
+
+
 function redirectToCreateRoom(){
   window.location += "create";
 }
 
 function joinRoom(){
-  var roomLink = document.getElementById("room-link").value;
-  window.location = roomLink;
+  if (document.getElementById("room-link").value == ""){
+    alert("Please enter a valid link.");
+  }
+
+  else {
+    var roomLink = document.getElementById("room-link").value;
+    window.location = roomLink;
+  }
 }
 
 var slideIndex = 1;
@@ -35,18 +51,3 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " active";
 }
-
-// function getAvg(){
-//   var firebaseConfig = FIREBASE_CONFIG;
-//   firebase.initializeApp(firebaseConfig);
-//   const db = firebase.database();
-//
-//   var avg = 0;
-//
-//   const avg_ref = db.ref('Average/avg');
-//   avg_ref.on('value',(snap)=>{
-//     avg = snap.val()});
-//
-//
-//   // console.log(avg);
-// }

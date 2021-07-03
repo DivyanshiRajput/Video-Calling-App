@@ -1,3 +1,12 @@
+var firebaseConfig = FIREBASE_CONFIG;
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const avg_ref = db.ref('Average/avg');
+avg_ref.on('value',(snap)=>{
+  document.getElementById('rating').innerHTML = 'Rated ' +  snap.val().toFixed(1) + '/5.0 ★';
+});
+
 function rejoin(){
     window.history.back();
 };
@@ -5,11 +14,6 @@ function rejoin(){
 function returnToHome(){
     window.location.href="../";
 }
-
-var firebaseConfig = FIREBASE_CONFIG;
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
 
 function addFeedback(){
 
@@ -27,22 +31,27 @@ function addFeedback(){
 
     ref.set(newRating);
 
-    // old_avg = Number();
-    // count = Number();
-    // // update average
-    // const avg_ref = db.ref('Average/avg');
-    // avg_ref.once('value',(snap)=>{
-    //   old_avg = snap.val()});
-    //
-    // const count_ref = db.ref('Average/count');
-    // count_ref.once('value',(snap)=>{
-    //   count = snap.val()});
-    //
-    // new_avg = ((old_avg * count) + temp )/(count + 1);
-    // avg_ref.set(new_avg);
-    //
-    // count += 1;
-    // count_ref.set(count);
+    // update average
+    const avg_ref = db.ref('Average');
+
+    avg_ref.once('value',(snap)=>{
+      console.log(snap.val());
+
+      old_avg = snap.val()['avg'];
+      count = snap.val()['count'];
+
+      console.log(old_avg);
+      console.log(count);
+
+      new_avg = ((old_avg * count) + temp )/(count + 1);
+      count += 1;
+
+      avg_ref.set({
+        avg: new_avg,
+        count: count
+      });
+
+    });
 
     alert("Your feedback has been submitted.");
 };

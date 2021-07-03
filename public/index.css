@@ -53,7 +53,7 @@ body {
 
 .center{
   position: relative;
-  top: 45%;
+  top: 50%;
   transform: translateY(-50%);
   padding-top: 100px;
   padding-bottom: 100px;
@@ -227,4 +227,11 @@ img {
 .subheading{
   text-align: center;
   color: grey;
+}
+
+.rated{
+  color: #717171;
+  height: 30px;
+  display: flex;
+  justify-content: center;
 }
