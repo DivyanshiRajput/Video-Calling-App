@@ -20,10 +20,6 @@ body {
 }
 
 .main-block-left{
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
 
 
 
@@ -33,11 +29,11 @@ body {
   margin-right: 3%;
 
   float: left;
-  height: 80%;
+  height: 100%;
 }
 
 .main-block-right{
-  margin-top: 50px;
+
   padding: 24px;
   width: 38%;
   margin-right: 1%;
@@ -45,18 +41,25 @@ body {
 
 
   float: right;
-  height: 80%;
+  height: 100%;
 }
 
 .heading {
   font-size: 40px;
   text-align: center;
   margin-bottom: 40px;
-  margin-top: 40px;
 }
 
 .functions {
 
+}
+
+.center{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-top: 70px;
+  padding-bottom: 70px;
 }
 
 
@@ -81,26 +84,140 @@ body {
   align-items: center;
 }
 
+input {
+  padding-left: 5px;
+  font-size: 16px;
+  height: 30px;
+}
+
 .join-room-button {
-  border: none;
   background-color: #394655;
   color: #FFFFFF;
   padding: 4px 8px;
   border-radius: 5px;
-
-  margin: 10px;
+  margin: 0px 10px;
+  border-width: 1px;
+  border-color:  #394655;
+  width: 130px;
 }
 
 .create-room-button{
-  border: none;
-  background-color: #394655;
-  color: #FFFFFF;
+  background-color: white;
+  color: #394655;
   padding: 4px 8px;
   border-radius: 5px;
 
-  margin: 10px;
+  border-width: 1px;
+  border-color: #394655;
+
+  margin: 0px 10px;
+  width: 130px;
 }
 
 .join-meeting-text {
   margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+img {
+  display:block;
+  margin:auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: #717171;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 3px;
+  user-select: none;
+  text-decoration: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #717171;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
 }

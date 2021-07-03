@@ -18,37 +18,92 @@
 </head>
 <body>
 
-  <div class="main-block-left shadow">
-    <div class="heading">
-        Welcome to Microsoft Teams clone
-    </div>
+  <div class="main-block-left">
+    <div class="center shadow">
+      <div class="heading">
+          Welcome to Microsoft Teams clone
+      </div>
 
-    <div class="functions">
-        <div class="username">
-            <div class="join-meeting-text">
-              Join meeting as:
-            </div>
-            <input type="text" id="user-name" placeholder="Enter a username">
-        </div>
+      <div class="functions">
+          <div class="username">
+              <div class="join-meeting-text">
+                Join meeting as:
+              </div>
+              <input type="text" id="user-name" placeholder="Enter a username">
+          </div>
 
-        <div class="buttons">
-          <button onclick="redirectToCreateRoom()" type="button" class="create-room-button"> Create Room </button>
-        </div>
+          <div class="buttons">
+            <button onclick="redirectToCreateRoom()" type="button" class="create-room-button"> Create Room </button>
+            <button onclick="joinRoom()" type="button" class="join-room-button"> Join Room </button>
+          </div>
 
-        <div class="buttons" >
-          <input type="text" id="room-link" placeholder="Enter a room link">
-          <button onclick="joinRoom()" type="button" class="join-room-button"> Join Room </button>
-        </div>
+          <div class="buttons" >
+            <input type="text" id="room-link" placeholder="Enter a room link">
+          </div>
+      </div>
     </div>
   </div>
 
   <div class="main-block-right">
-    <div class="heading">
+    <!-- <div class="heading">
       Features
+    </div> -->
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+
+      <!-- Full-width images with number and caption text -->
+      <div class="mySlides">
+        <div class="numbertext">1 / 5</div>
+        <img src="../images/1.jpg" style="width:70%">
+        <div class="text">Caption Text</div>
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">2 / 5</div>
+        <img src="../images/2.jpg" style="width:70%">
+        <div class="text">Caption Two</div>
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">3 / 5</div>
+        <img src="../images/3.jpg" style="width:70%">
+        <div class="text">Caption Three</div>
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">4 / 5</div>
+        <img src="../images/4.jpg" style="width:70%">
+        <div class="text">Caption Two</div>
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">5 / 5</div>
+        <img src="../images/5.jpg" style="width:70%">
+        <div class="text">Caption Two</div>
+      </div>
+
+      <!-- <div class="mySlides fade">
+        <div class="numbertext">3 / 3</div>
+        <img src="img3.jpg" style="width:100%">
+        <div class="text">Caption Three</div>
+      </div> -->
+
+      <!-- Next and previous buttons -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
-      Hello World!!!
+    <br>
+
+    <!-- The dots/circles -->
+    <div style="text-align:center">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+      <span class="dot" onclick="currentSlide(5)"></span>
+    </div>
   </div>
-  
+
   <script src="../index.js"></script>
 </body>
 </html>
