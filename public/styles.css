@@ -78,7 +78,7 @@ body.dark-mode .main_right {
 
 .showChat .main_right {
   display: flex;
-  flex: 0.25;
+  flex: 0.3;
   max-width: 375px;
 }
 
