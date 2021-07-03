@@ -100,10 +100,22 @@ body {
 }
 
 .rejoin-button {
+  background-color: white;
+  color: #394655;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border-width: 1px;
+  margin: 0px 10px;
   width: 100px;
-  border: none;
+}
+
+.return-to-home {
   background-color: #394655;
   color: #FFFFFF;
   padding: 4px 8px;
   border-radius: 5px;
+  margin: 0px 10px;
+  border-width: 1px;
+  border-color:  #394655;
+  width: 200px;
 }
