@@ -35,3 +35,18 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " active";
 }
+
+// function getAvg(){
+//   var firebaseConfig = FIREBASE_CONFIG;
+//   firebase.initializeApp(firebaseConfig);
+//   const db = firebase.database();
+//
+//   var avg = 0;
+//
+//   const avg_ref = db.ref('Average/avg');
+//   avg_ref.on('value',(snap)=>{
+//     avg = snap.val()});
+//
+//
+//   // console.log(avg);
+// }
