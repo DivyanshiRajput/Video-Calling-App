@@ -82,6 +82,12 @@ body.dark-mode .main_right {
   max-width: 375px;
 }
 
+.showParticipants .main_right {
+  display: flex;
+  flex: 0.3;
+  max-width: 375px;
+}
+
 .main_videos {
   flex-grow: 1;
   background-color: white;
@@ -210,14 +216,6 @@ body.dark-mode .message_container input:focus {
   width: auto;
 }
 
-/* .messages li {
-  color: #000000;
-  padding: 8px 8px 8px 16px;
-  border-radius: 8px;
-  background-color: white;
-  margin: 8px 8px 8px 8px;
-} */
-
 .messageRight {
   color: #ffffff;
   padding: 8px 8px 8px 16px;
@@ -320,24 +318,6 @@ body.dark-mode .copy_button {
   border-width: 0.25px;
 }
 
-@keyframes blink {
-  0% {
-    background-color: #f00;
-  }
-  25% {
-    background-color: #fff;
-  }
-  50% {
-    background-color: #f00;
-  }
-  75% {
-    background-color: #fff;
-  }
-  100% {
-    background-color: #f00;
-  }
-}
-
 .sendMessage {
   width: 50px;
   font-size: 22px;
@@ -347,43 +327,3 @@ body.dark-mode .copy_button {
   cursor: pointer;
   color: #3888f6;
 }
-
-/* @media (max-width: 640px) {
-  .main_controls {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
-
-  .control_button span {
-    display: none;
-  }
-
-  #leave-meeting {
-    display: none;
-  }
-
-  .showChat .main_right {
-    display: flex;
-    position: fixed;
-    width: 100%;
-    height: calc(100% - 65px);
-    opacity: 0.8;
-  }
-
-  .showChat .main_left {
-    flex: 1;
-  }
-
-  video {
-    max-height: 190px;
-    max-width: 100%;
-    width: 50% !important;
-  }
-
-  #video-grid {
-    justify-content: flex-start;
-    align-items: initial;
-  }
-} */

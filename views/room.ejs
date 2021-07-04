@@ -61,6 +61,11 @@
                         <span>Invite</span>
                     </div>
 
+                    <div onclick = "showParticipants(this)" class="control_button" id="list_btn">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Participants</span>
+                    </div>
+
                     <div onclick="showChat(this)" class="control_button" id="chat_btn">
                         <i class="fas fa-comment-alt"></i>
                         <span>Chat</span>
@@ -75,21 +80,26 @@
 
         <div class="main_right" id="2">
         <!-- chat area -->
-            <div class="main_header">
-                <h6>Chat</h6>
-            </div>
+            <!-- <div class="chat-box"> -->
+                <div class="main_header">
+                    <h6>Chat</h6>
+                </div>
 
-            <div class="chat_window">
-                <ul class="messages" id="all_messages">
-                </ul>
-            </div>
+                <div class="chat_window">
+                    <ul class="messages" id="all_messages">
+                    </ul>
+                </div>
 
-            <div class="message_container">
-                <input type="text" id="chat_message" placeholder="Write a message...">
-                <button class="sendMessage" id = "send"  type="submit">
-                    <i class="far fa-paper-plane"></i>
-                </button>
-            </div>
+                <div class="message_container">
+                    <input type="text" id="chat_message" placeholder="Write a message...">
+                    <button class="sendMessage" id = "send"  type="submit">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+                </div>
+            <!-- </div> -->
+
+            <!-- <div class="participants-list">
+            </div> -->
         </div>
     </div>
     <script src="script.js"></script>
