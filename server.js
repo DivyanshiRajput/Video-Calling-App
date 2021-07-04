@@ -34,6 +34,7 @@ socketIo.on('connection', socket => {
 
     socket.on('join-room', (roomId, userId, userName) => {
       socket.join(roomId);
+
       socket.to(roomId).emit('user-connected', userId, userName);
       console.log("joined room");
 
@@ -43,7 +44,7 @@ socketIo.on('connection', socket => {
 
       socket.on('disconnect', id => {
         socket.to(roomId).emit('user-disconnected', userId, userName);
-        console.log ("user disconnected");
+        console.log("user disconnected");
       });
     });
 });

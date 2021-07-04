@@ -6,15 +6,16 @@ myVideo.muted = true;
 const user = prompt("Enter your name:");
 
 var currentUserId;
+var userList = [];
 
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443'
+    port: '3000',
 });
 
 let myVideoStream;
-navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
+navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
 .then(stream => {
 
     myVideoStream = stream;
@@ -26,24 +27,30 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
         const video = document.createElement('video');
         video.setAttribute('id', call.peer);
 
+        userList = userList.concat(call.metadata.userName);
+
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
         });
-
     });
 
-    socket.on('user-connected', (userId) => {
+    socket.on('user-connected', (userId, userName) => {
+        userList = userList.concat(userName);
         connectToNewUser(userId, stream);
     });
 
     socket.on('user-disconnected', (userId, userName) => {
+        const index = userList.indexOf(userName);
+        if (index > -1) {
+        userList.splice(index, 1);
+        }
         disconnectUser(userId, stream);
     })
-
 });
 
 const connectToNewUser = (userId, stream) => {
-    const call = peer.call(userId, stream);
+    options = {metadata: {"userName":user}};
+    const call = peer.call(userId, stream, options);
     const video = document.createElement('video');
     video.setAttribute('id', userId);
     call.on('stream', userVideoStream => {
@@ -58,9 +65,10 @@ const disconnectUser = (userId, stream) => {
 }
 
 peer.on('open', id => {
+    // update user list
     currentUserId = id;
+    userList = userList.concat(user);
     socket.emit('join-room', ROOM_ID, id, user);
-
 });
 
 peer.on('close', id => {
@@ -251,6 +259,14 @@ const copyToClipboard = () => {
     alert("Copied: " + copyText.value );
     hideInvitePopup();
 }
+
+// show participants list
+const showParticipants = (e) => {
+
+    // e.classList.toggle("active");
+    // document.body.classList.toggle("showParticipants");
+    console.log(userList);
+};
 
 // function shareScreen() {
 //         if ( this.userMediaAvailable() ) {
