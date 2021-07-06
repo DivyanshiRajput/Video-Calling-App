@@ -8,14 +8,35 @@ const user = prompt("Enter your name:");
 var currentUserId;
 var userList = [];
 
+var firebaseConfig = FIREBASE_CONFIG;
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const room_ref = db.ref("Chatroom/" + ROOM_ID);
+const sorted_room_ref = db.ref("Chatroom/" + ROOM_ID).orderByChild('timestamp');
+
+sorted_room_ref.once('value',(snap) => {
+  var messages = snap.val();
+
+  Object.keys(messages).forEach(function (key){
+    if (messages[key]['userName'] === user){
+      $('#all_messages').append(`<li class ="messageRight">${messages[key]['message']}</li>`);
+    }
+    else{
+      $('#all_messages').append(`<li class ="messageLeft">${messages[key]['userName']}<br/>${messages[key]['message']}</li>`);
+    }
+  });
+
+});
+
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '3000',
 });
 
 let myVideoStream;
-navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
+navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
 .then(stream => {
 
     myVideoStream = stream;
@@ -125,6 +146,7 @@ let text = $('#chat_message');
 $("#send").click(() => {
     if (text.val() != 0)
     {
+        updateChatFirebase(user, text);
         socket.emit('message', text.val());
         text.val('');
     }
@@ -132,13 +154,16 @@ $("#send").click(() => {
 });
 
 $('html').keydown((e) => {
-  if (e.which == 13 && text.val() != 0){
+  if (e.which == 13 && text.val() != 0)
+  {
+      updateChatFirebase(user, text);
       socket.emit('message', text.val());
       text.val('')
   }
 });
 
 socket.on('createMessage', function(message, userName){
+
   if (userName === user){
     $('#all_messages').append(`<li class ="messageRight">${message}</li>`);
   }
@@ -151,6 +176,7 @@ socket.on('createMessage', function(message, userName){
 
 // scroll function for chat box
 const scrollBottom = () => {
+  console.log("hi");
     var d = $('.chat_window');
     d.scrollTop(d.prop("scrollHeight"));
 };
@@ -244,6 +270,7 @@ const showChat = (e) => {
 
     e.classList.toggle("active");
     document.body.classList.toggle("showChat");
+    scrollBottom();
 };
 
 //invite link popup functions
@@ -285,6 +312,17 @@ const showParticipants = (e) => {
     e.classList.toggle("active");
 
 };
+
+// update chat in firebasejs
+const updateChatFirebase = (userName, message) => {
+  var ref = db.ref("Chatroom/" + ROOM_ID);
+  var newMessage = {
+    'userName':userName,
+    'message':message.val(),
+    'timestamp':Date.now()
+  };
+  ref.push(newMessage);
+}
 
 // function shareScreen() {
 //         if ( this.userMediaAvailable() ) {
