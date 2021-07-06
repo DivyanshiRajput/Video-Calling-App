@@ -151,7 +151,7 @@ $('html').keydown((e) => {
 
 socket.on('createMessage', function(message, userName){
   if (userName === user){
-    $('#all_messages').append(`<li class ="messageRight">me<br/>${message}</li>`);
+    $('#all_messages').append(`<li class ="messageRight">${message}</li>`);
   }
   else{
     $('#all_messages').append(`<li class ="messageLeft">${userName}<br/>${message}</li>`);
