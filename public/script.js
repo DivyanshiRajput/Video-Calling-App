@@ -28,16 +28,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
         video.setAttribute('id', call.peer);
 
         userList = userList.concat(call.metadata.userName);
-
-        // updating participants box
-        // var ele  = document.getElementById('participants-list');
-        // ele.innerHTML = '';
-        // userList.forEach((item, i) => {
-        //   ele.innerHTML += "<li class='messageRight'>" + item +  "</li>";
-        // });
         updateParticipantsList();
-
-
 
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
@@ -77,7 +68,6 @@ const disconnectUser = (userId, stream) => {
 }
 
 peer.on('open', id => {
-    // update user list
     currentUserId = id;
     userList = userList.concat(user);
     updateParticipantsList();
@@ -143,7 +133,6 @@ $("#send").click(() => {
 
 $('html').keydown((e) => {
   if (e.which == 13 && text.val() != 0){
-      console.log(text.val());
       socket.emit('message', text.val());
       text.val('')
   }
@@ -158,7 +147,6 @@ socket.on('createMessage', function(message, userName){
   }
 
   scrollBottom();
-  console.log("this is coming from server");
   });
 
 // scroll function for chat box
@@ -289,9 +277,6 @@ const copyToClipboard = () => {
 // show participants list
 const showParticipants = (e) => {
 
-    // open participants list
-    // directly open
-    // chat --> hide, flex = 0
     if(document.body.classList.contains('showChat')){
       document.body.classList.toggle('showChat');
       document.getElementById('chat_btn').classList.toggle("active");
@@ -299,11 +284,7 @@ const showParticipants = (e) => {
     document.body.classList.toggle("showParticipants");
     e.classList.toggle("active");
 
-    // document.body.classList.toggle("showParticipants");
-    console.log(userList);
 };
-
-
 
 // function shareScreen() {
 //         if ( this.userMediaAvailable() ) {

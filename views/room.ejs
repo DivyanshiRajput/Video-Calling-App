@@ -21,7 +21,6 @@
         crossorigin="anonymous"></script>
     <script>
         const ROOM_ID = "<%= roomId %>";
-        // console.log("<%= roomId %>");
     </script>
 </head>
 <body>
@@ -32,14 +31,12 @@
                 <div id="video-grid">
                 </div>
             </div>
-
             <div class="invitePop" id="invite">
                 <div class = "link_box">
                     <input type="text" id="roomLink" readonly />
                     <button class = "copy_button" onclick="copyToClipboard()">Copy</button>
                 </div>
             </div>
-
             <div class="main_controls">
                     <div onclick="muteFunction()" class="control_button mute">
                         <i class="fas fa-microphone"></i>
@@ -80,41 +77,32 @@
 
         <div class="main_right" id='chat-box'>
         <!-- chat area -->
-            <!-- <div class="chat-box"> -->
-                <div class="main_header">
-                    <h6>Chat</h6>
-                </div>
-
-                <div class="chat_window">
-                    <ul class="messages" id="all_messages">
-                    </ul>
-                </div>
-
-                <div class="message_container">
-                    <input type="text" id="chat_message" placeholder="Write a message...">
-                    <button class="sendMessage" id = "send"  type="submit">
-                        <i class="far fa-paper-plane"></i>
-                    </button>
-                </div>
-            <!-- </div> -->
-
-            <!-- <div class="participants-list">
-            </div> -->
+            <div class="main_header">
+                <h6>Chat</h6>
+            </div>
+            <div class="chat_window">
+                <ul class="messages" id="all_messages">
+                </ul>
+            </div>
+            <div class="message_container">
+                <input type="text" id="chat_message" placeholder="Write a message...">
+                <button class="sendMessage" id = "send"  type="submit">
+                    <i class="far fa-paper-plane"></i>
+                </button>
+            </div>
         </div>
-
 
         <div class="main_right_two" id="participants-list-box">
-                <div class="main_header">
-                    <h6>Participants List</h6>
-                </div>
+        <!-- participants list -->
+            <div class="main_header">
+                <h6>Participants List</h6>
+            </div>
 
-                <div class="chat_window">
-                    <ol type="1" id="participants-list">
-                    </ol>
-                </div>
+            <div class="chat_window">
+                <ol type="1" id="participants-list">
+                </ol>
+            </div>
         </div>
-
-
     </div>
     <script src="script.js"></script>
 </body>
