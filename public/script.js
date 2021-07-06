@@ -29,6 +29,16 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
 
         userList = userList.concat(call.metadata.userName);
 
+        // updating participants box
+        // var ele  = document.getElementById('participants-list');
+        // ele.innerHTML = '';
+        // userList.forEach((item, i) => {
+        //   ele.innerHTML += "<li class='messageRight'>" + item +  "</li>";
+        // });
+        updateParticipantsList();
+
+
+
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
         });
@@ -36,6 +46,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
 
     socket.on('user-connected', (userId, userName) => {
         userList = userList.concat(userName);
+        updateParticipantsList();
         connectToNewUser(userId, stream);
     });
 
@@ -44,6 +55,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
         if (index > -1) {
         userList.splice(index, 1);
         }
+        updateParticipantsList();
         disconnectUser(userId, stream);
     })
 });
@@ -68,6 +80,7 @@ peer.on('open', id => {
     // update user list
     currentUserId = id;
     userList = userList.concat(user);
+    updateParticipantsList();
     socket.emit('join-room', ROOM_ID, id, user);
 });
 
@@ -82,6 +95,14 @@ function leave(){
     else{
         return;
     }
+}
+
+const updateParticipantsList = () => {
+  var ele  = document.getElementById('participants-list');
+  ele.innerHTML = '';
+  userList.forEach((item, i) => {
+    ele.innerHTML += "<li class='participant-list-item'>" + item +  "</li>";
+  });
 }
 
 const addVideoStream = function(video, stream){
@@ -130,10 +151,10 @@ $('html').keydown((e) => {
 
 socket.on('createMessage', function(message, userName){
   if (userName === user){
-    $('ul').append(`<li class ="messageRight">me<br/>${message}</li>`);
+    $('#all_messages').append(`<li class ="messageRight">me<br/>${message}</li>`);
   }
   else{
-    $('ul').append(`<li class ="messageLeft">${userName}<br/>${message}</li>`);
+    $('#all_messages').append(`<li class ="messageLeft">${userName}<br/>${message}</li>`);
   }
 
   scrollBottom();
@@ -228,6 +249,11 @@ const darkLight = () =>{
 
 // chat toggle window
 const showChat = (e) => {
+    if(document.body.classList.contains('showParticipants')){
+      document.body.classList.toggle('showParticipants');
+      document.getElementById('list_btn').classList.toggle("active");
+    }
+
     e.classList.toggle("active");
     document.body.classList.toggle("showChat");
 };
@@ -263,10 +289,21 @@ const copyToClipboard = () => {
 // show participants list
 const showParticipants = (e) => {
 
-    // e.classList.toggle("active");
+    // open participants list
+    // directly open
+    // chat --> hide, flex = 0
+    if(document.body.classList.contains('showChat')){
+      document.body.classList.toggle('showChat');
+      document.getElementById('chat_btn').classList.toggle("active");
+    }
+    document.body.classList.toggle("showParticipants");
+    e.classList.toggle("active");
+
     // document.body.classList.toggle("showParticipants");
     console.log(userList);
 };
+
+
 
 // function shareScreen() {
 //         if ( this.userMediaAvailable() ) {

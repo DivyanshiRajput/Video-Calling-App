@@ -72,17 +72,32 @@ video {
   display: none;
 }
 
+.main_right_two{
+  margin: 16px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+  background-color: #f1f4f9;
+  display: none;
+}
+
 body.dark-mode .main_right {
   background-color: #3c4043;
 }
 
-.showChat .main_right {
+body.dark-mode .main_right_two {
+  background-color: #3c4043;
+}
+
+
+.showChat .main_right{
   display: flex;
   flex: 0.3;
   max-width: 375px;
 }
 
-.showParticipants .main_right {
+.showParticipants .main_right_two {
   display: flex;
   flex: 0.3;
   max-width: 375px;
@@ -326,4 +341,23 @@ body.dark-mode .copy_button {
   box-shadow: none;
   cursor: pointer;
   color: #3888f6;
+}
+
+.participant-list-item {
+  margin: 8px;
+}
+
+#participants-list{
+  color: #000000;
+  padding: 16px;
+  padding-left: 32px;
+  border-radius: 8px;
+  background-color: white;
+  margin: 8px 8px;
+}
+
+
+body.dark-mode #participants-list {
+  color: #ffffff;
+  background-color: #5c6267;
 }
