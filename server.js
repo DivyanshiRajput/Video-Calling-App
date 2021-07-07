@@ -21,7 +21,7 @@ var FIREBASE_CONFIG = {
      appId: "1:24512433115:web:85d0bd97e77414338e75fe",
      measurementId: "G-R1EGVPHZ3R"
    };
-   
+
 firebase.initializeApp(FIREBASE_CONFIG);
 const db = firebase.database();
 
@@ -53,13 +53,29 @@ app.get('/:room/leave', function(req, res){
     res.render('leave');
 })
 
+app.get('/:room/chatroom', function(req, res){
+    res.render('chatroom', {roomId: req.params.room});
+})
+
+app.get('/:room/chatroom/leave', function(req, res){
+    var room = req.params.room;
+    res.redirect(`/${room}/leave`);
+})
+
 socketIo.on('connection', socket => {
 
-    socket.on('join-room', (roomId, userId, userName) => {
+    socket.on('join-room', (roomId, userId, userName, type) => {
       socket.join(roomId);
 
-      socket.to(roomId).emit('user-connected', userId, userName);
-      console.log("joined room");
+      if (type == "video"){
+        socket.to(roomId).emit('user-connected', userId, userName);
+        console.log("joined room");
+      }
+
+      else{
+        socket.to(roomId).emit('user-connected-chat', userId, userName);
+        console.log("joined chat room");
+      }
 
       socket.on('message', function(message){
         socketIo.to(roomId).emit('createMessage', message, userName);
