@@ -1,10 +1,6 @@
 const socket = io('/');
-// const videoGrid = document.getElementById("video-grid");
-// const myVideo = document.createElement('video');
-// myVideo.muted = true;
 
-// just added below
-// empty stream
+// creating fake media stream
 const createEmptyAudioTrack = () => {
   const ctx = new AudioContext();
   const oscillator = ctx.createOscillator();
@@ -27,15 +23,14 @@ const createEmptyVideoTrack = ({ width, height }) => {
 const audioTrack = createEmptyAudioTrack();
 const videoTrack = createEmptyVideoTrack({ width:0, height:0 });
 const mediaStream = new MediaStream([audioTrack, videoTrack]);
-// just added above
 
-
-
+// userName input
 const user = prompt("Enter your name:");
 
 var currentUserId;
 var userList = [];
 
+// setting up firebase
 var firebaseConfig = FIREBASE_CONFIG;
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
@@ -63,75 +58,6 @@ var peer = new Peer(undefined, {
     port: '443',
 });
 
-// let myVideoStream;
-// navigator.mediaDevices.getUserMedia({ video: true, audio: false,})
-// .then(stream => {
-
-    // myVideoStream = stream;
-    // addVideoStream(myVideo, stream);
-    // document.getElementsByTagName("video")[0].setAttribute("id", currentUserId);
-
-    // on call for calling (needs stream)
-    peer.on('call', call => {
-
-        // commenting this
-        call.answer(mediaStream);
-
-        // const video = document.createElement('video');
-        // video.setAttribute('id', call.peer);
-
-        userList = userList.concat(call.metadata.userName);
-        updateParticipantsList();
-
-        // call.on('stream', mediaStream => {
-        //     // addVideoStream(video, mediaStream);
-        // });
-    });
-
-    socket.on('user-connected', (userId, userName) => {
-        userList = userList.concat(userName);
-        updateParticipantsList();
-        // comment out for now
-        connectToNewUser(userId);
-    });
-
-    socket.on('user-connected-chat', (userId, userName) => {
-        userList = userList.concat(userName);
-        updateParticipantsList();
-        // comment out for now
-        connectToNewUser(userId);
-    });
-
-    socket.on('user-disconnected', (userId, userName) => {
-        const index = userList.indexOf(userName);
-        if (index > -1) {
-        userList.splice(index, 1);
-        }
-        updateParticipantsList();
-        // disconnectUser(userId, stream);
-    })
-// });
-
-// uncommenting this
-const connectToNewUser = (userId) => {
-    options = {metadata: {"userName":user}};
-
-
-    const call = peer.call(userId, mediaStream, options);
-
-    // const video = document.createElement('video');
-    // video.setAttribute('id', userId);
-    // call.on('stream', mediaStream => {
-    //     // addVideoStream(video, mediaStream);
-    // });
-};
-
-// const disconnectUser = (userId, stream) => {
-//   if (document.getElementById(userId) != null){
-//       document.getElementById(userId).remove();
-//   }
-// }
-
 peer.on('open', id => {
     currentUserId = id;
     userList = userList.concat(user);
@@ -139,9 +65,41 @@ peer.on('open', id => {
     socket.emit('join-room', ROOM_ID, id, user, "chat");
 });
 
+peer.on('call', call => {
+    call.answer(mediaStream);
+    userList = userList.concat(call.metadata.userName);
+    updateParticipantsList();
+
+});
+
 peer.on('close', id => {
     socket.emit ('disconnect', id);
 })
+
+socket.on('user-connected', (userId, userName) => {
+    userList = userList.concat(userName);
+    updateParticipantsList();
+    connectToNewUser(userId);
+});
+
+socket.on('user-connected-chat', (userId, userName) => {
+    userList = userList.concat(userName);
+    updateParticipantsList();
+    connectToNewUser(userId);
+});
+
+socket.on('user-disconnected', (userId, userName) => {
+    const index = userList.indexOf(userName);
+    if (index > -1) {
+    userList.splice(index, 1);
+    }
+    updateParticipantsList();
+});
+
+const connectToNewUser = (userId) => {
+    options = {metadata: {"userName":user}};
+    const call = peer.call(userId, mediaStream, options);
+};
 
 function leave(){
     if (window.confirm("Are you sure you want to leave the room?")){
@@ -159,31 +117,6 @@ const updateParticipantsList = () => {
     ele.innerHTML += "<li class='participant-list-item'>" + item +  "</li>";
   });
 }
-
-// const addVideoStream = function(video, stream){
-//     video.srcObject = stream;
-//     video.addEventListener('loadedmetadata', function(){
-//         video.play();
-//     });
-//     videoGrid.append(video);
-// }
-
-// const addVideoStream = (video, stream, uId) => {
-//     video.srcObject = stream;
-//     video.id = uId;
-//     video.addEventListener('loadedmetadata', function(){
-//         video.play();
-//     });
-//     videoGrid.append(video);
-//
-//     let totalUsers = document.getElementsByTagName("video").length;
-//     if(totalUsers > 1){
-//         for (let i = 0; i < totalUsers; i++){
-//             document.getElementsByTagName("video")[i].style.width = 100 / totalUsers + "%";
-//             document.getElementsByTagName("video")[i].style.width = 50+ "%";
-//             document.getElementsByTagName("video")[i].style.height = 50 + "%";
-//         }}
-// };
 
 let text = $('#chat_message');
 
@@ -221,74 +154,9 @@ socket.on('createMessage', function(message, userName){
 
 // scroll function for chat box
 const scrollBottom = () => {
-  // console.log("hi");
     var d = $('.chat_window');
     d.scrollTop(d.prop("scrollHeight"));
 };
-
-//functioning of mute button
-// function setMuteButton(){
-//     const html = `
-//     <i class="fas fa-microphone"></i>
-//     <span> Mute </span>
-//     `
-//     document.querySelector('.mute').innerHTML = html;
-// }
-
-// comment out
-// function setUnmuteButton(){
-//     const html = `
-//     <i class="unmute fas fa-microphone-slash"></i>
-//     <span> Unmute </span>
-//     `
-//     document.querySelector('.mute').innerHTML = html;
-// }
-//
-// function muteFunction(){
-//     const enabled = myVideoStream.getAudioTracks()[0].enabled;
-//     if (enabled){
-//         myVideoStream.getAudioTracks()[0].enabled = false;
-//         setUnmuteButton();
-//     }
-//
-//     else{
-//         setMuteButton();
-//         myVideoStream.getAudioTracks()[0].enabled = true;
-//     }
-// }
-
-// comment out
-//functioning of video button
-// function playVideo(){
-//     const html = `
-//     <i class="stopVideo fas fa-video-slash"></i>
-//     <span> Play Video </span>
-//     `
-//     document.querySelector('.video').innerHTML = html;
-//
-// }
-//
-// function stopVideo(){
-//     const html = `
-//     <i class="fas fa-video" aria-hidden="true"></i>
-//     <span> Stop Video </span>
-//     `
-//     document.querySelector('.video').innerHTML = html;
-// }
-
-// comment out
-// function videoFunction(){
-//     const enabled = myVideoStream.getVideoTracks()[0].enabled;
-//     if (enabled){
-//         myVideoStream.getVideoTracks()[0].enabled = false;
-//         playVideo();
-//     }
-//
-//     else{
-//         stopVideo();
-//         myVideoStream.getVideoTracks()[0].enabled = true;
-//     }
-// }
 
 // dark mode and light mode
 const darkLight = () =>{
@@ -371,22 +239,3 @@ const updateChatFirebase = (userName, message) => {
   };
   ref.push(newMessage);
 }
-
-// function shareScreen() {
-//         if ( this.userMediaAvailable() ) {
-//             return navigator.mediaDevices.getDisplayMedia( {
-//                 video: {
-//                    cursor: "always"
-//                 },
-//                 audio: {
-//                     echoCancellation: true,
-//                     noiseSuppression: true,
-//                     sampleRate: 44100
-//                 }
-//             } );
-//         }
-
-//         else {
-//             throw new Error( 'User media not available' );
-//         }
-// }
