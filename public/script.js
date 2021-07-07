@@ -26,7 +26,6 @@ sorted_room_ref.once('value',(snap) => {
       $('#all_messages').append(`<li class ="messageLeft">${messages[key]['userName']}<br/>${messages[key]['message']}</li>`);
     }
   });
-
 });
 
 var peer = new Peer(undefined, {
