@@ -44,16 +44,16 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
     document.getElementsByTagName("video")[0].setAttribute("id", currentUserId);
 
     peer.on('call', call => {
-        call.answer(stream);
-        const video = document.createElement('video');
-        video.setAttribute('id', call.peer);
-
-        userList = userList.concat(call.metadata.userName);
-        updateParticipantsList();
-
-        call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream);
-        });
+      call.answer(stream);
+      userList = userList.concat(call.metadata.userName);
+      updateParticipantsList();
+        if(call.metadata.type == 'video'){
+          const video = document.createElement('video');
+          video.setAttribute('id', call.peer);
+          call.on('stream', userVideoStream => {
+              addVideoStream(video, userVideoStream);
+          });
+        }
     });
 
     socket.on('user-connected', (userId, userName) => {
@@ -61,6 +61,12 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
         updateParticipantsList();
         connectToNewUser(userId, stream);
     });
+
+    socket.on('user-connected-chat', (userId, userName)=> {
+      userList = userList.concat(userName);
+      updateParticipantsList();
+      connectToNewUserChat(userId,stream);
+    })
 
     socket.on('user-disconnected', (userId, userName) => {
         const index = userList.indexOf(userName);
@@ -73,7 +79,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
 });
 
 const connectToNewUser = (userId, stream) => {
-    options = {metadata: {"userName":user}};
+    options = {metadata: {"userName":user, "type":'video'}};
     const call = peer.call(userId, stream, options);
     const video = document.createElement('video');
     video.setAttribute('id', userId);
@@ -81,6 +87,12 @@ const connectToNewUser = (userId, stream) => {
         addVideoStream(video, userVideoStream);
     });
 };
+
+
+const connectToNewUserChat = (userId, stream) => {
+  options = {metadata: {"userName":user, "type":'chat'}};
+  const call = peer.call(userId, stream, options);
+}
 
 const disconnectUser = (userId, stream) => {
   if (document.getElementById(userId) != null){
@@ -92,7 +104,7 @@ peer.on('open', id => {
     currentUserId = id;
     userList = userList.concat(user);
     updateParticipantsList();
-    socket.emit('join-room', ROOM_ID, id, user);
+    socket.emit('join-room', ROOM_ID, id, user, "video");
 });
 
 peer.on('close', id => {
@@ -176,7 +188,7 @@ socket.on('createMessage', function(message, userName){
 
 // scroll function for chat box
 const scrollBottom = () => {
-  console.log("hi");
+  // console.log("hi");
     var d = $('.chat_window');
     d.scrollTop(d.prop("scrollHeight"));
 };
