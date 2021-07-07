@@ -14,13 +14,25 @@ function redirectToCreateRoom(){
 
 function joinRoom(){
   var url = document.getElementById("room-link").value;
-  if ( !validURL(url)){
+  if (!validURL(url)){
     alert("Please enter a valid link.");
   }
 
   else {
     var roomLink = document.getElementById("room-link").value;
     window.location = roomLink;
+  }
+}
+
+function joinChat(){
+  var url = document.getElementById("room-link").value;
+  if (!validURL(url)){
+    alert("Please enter a valid link.");
+  }
+
+  else {
+    var roomLink = document.getElementById("room-link").value;
+    window.location = roomLink + "/chatroom";
   }
 }
 
