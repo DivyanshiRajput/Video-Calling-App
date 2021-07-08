@@ -131,6 +131,11 @@ body.dark-mode .main_header {
   overflow-y: scroll;
 }
 
+.participant_window{
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
 .message_container {
   display: flex;
 }
@@ -185,10 +190,6 @@ body.dark-mode .message_container input:focus {
   width: fit-content;
 }
 
-/* .messageRight text{
-  display: inline-block;
-} */
-
 .messageLeft {
   color: #000000;
   padding: 8px 16px;
@@ -200,10 +201,6 @@ body.dark-mode .message_container input:focus {
   max-width: 300px;
   width: fit-content;
 }
-
-/* li{
-  display: block;
-} */
 
 body.dark-mode .messageRight {
   color: #ffffff;
