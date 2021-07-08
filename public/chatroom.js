@@ -24,19 +24,19 @@ const audioTrack = createEmptyAudioTrack();
 const videoTrack = createEmptyVideoTrack({ width:0, height:0 });
 const mediaStream = new MediaStream([audioTrack, videoTrack]);
 
-const user = prompt("Enter your name:");
-// let user;
-// if (localStorage.getItem("user") != null){
-//   user = localStorage.getItem("user");
-// }
-//
-// else{
-//   user = "";
-//   while(user == ""){
-//     user = prompt("Enter your name:");
-//   }
-//   localStorage.setItem("user", user);
-// }
+// const user = prompt("Enter your name:");
+let user;
+if (localStorage.getItem("user") != null){
+  user = localStorage.getItem("user");
+}
+
+else{
+  user = "";
+  while(user == ""){
+    user = prompt("Enter your name:");
+  }
+  localStorage.setItem("user", user);
+}
 
 
 var currentUserId;
@@ -68,7 +68,7 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '3000',
+    port: '443',
 });
 
 peer.on('open', id => {

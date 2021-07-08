@@ -3,20 +3,20 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
-const user = prompt("Enter your name:");
+// const user = prompt("Enter your name:");
 
-// let user;
-// if (localStorage.getItem("user") != null){
-//   user = localStorage.getItem("user");
-// }
-//
-// else{
-//   user = "";
-//   while(user == ""){
-//     user = prompt("Enter your name:");
-//   }
-//   localStorage.setItem("user", user);
-// }
+let user;
+if (localStorage.getItem("user") != null){
+  user = localStorage.getItem("user");
+}
+
+else{
+  user = "";
+  while(user == ""){
+    user = prompt("Enter your name:");
+  }
+  localStorage.setItem("user", user);
+}
 
 var currentUserId;
 var userList = [];
@@ -44,11 +44,11 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '3000',
+    port: '443',
 });
 
 let myVideoStream;
-navigator.mediaDevices.getUserMedia({ video: true, audio: false})
+navigator.mediaDevices.getUserMedia({ video: true, audio: true})
 .then(stream => {
 
     myVideoStream = stream;
