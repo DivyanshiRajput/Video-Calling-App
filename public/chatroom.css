@@ -280,3 +280,13 @@ body.dark-mode #participants-list {
   color: #ffffff;
   background-color: #5c6267;
 }
+
+.rejoin-button {
+  background-color: #3888f6;
+  color: #394655;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border-width: 1px;
+  margin: 0px 10px;
+  flex: 1;
+}
