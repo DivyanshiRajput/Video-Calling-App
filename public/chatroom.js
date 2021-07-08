@@ -66,7 +66,7 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '433',
+    port: '443',
 });
 
 peer.on('open', id => {
@@ -141,7 +141,6 @@ $("#send").click(() => {
         socket.emit('message', text.val());
         text.val('');
     }
-
 });
 
 $('html').keydown((e) => {
@@ -154,7 +153,6 @@ $('html').keydown((e) => {
 });
 
 socket.on('createMessage', function(message, userName){
-
   if (userName === user){
     $('#all_messages').append(`<li class ="messageRight">${message}</li>`);
   }

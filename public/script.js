@@ -292,7 +292,7 @@ const showChat = (e) => {
       document.getElementById('list_btn').classList.toggle("active");
     }
 
-    e.classList.toggle("active");
+    document.getElementById('chat_btn').classList.toggle("active");
     document.body.classList.toggle("showChat");
     scrollBottom();
 };
@@ -326,14 +326,14 @@ const copyToClipboard = () => {
 }
 
 // show participants list
-const showParticipants = (e) => {
+const showParticipants = () => {
 
     if(document.body.classList.contains('showChat')){
       document.body.classList.toggle('showChat');
       document.getElementById('chat_btn').classList.toggle("active");
     }
     document.body.classList.toggle("showParticipants");
-    e.classList.toggle("active");
+    document.getElementById('list_btn').classList.toggle("active");
 
 };
 
