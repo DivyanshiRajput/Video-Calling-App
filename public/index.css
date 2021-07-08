@@ -70,8 +70,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding-left: 50px;
-  padding-right: 50px; */
 }
 
 .buttons{
@@ -82,6 +80,7 @@ body {
 }
 
 input {
+  width: 280px;
   padding-left: 5px;
   font-size: 16px;
   height: 37px;
@@ -202,24 +201,6 @@ img {
   background-color: #717171;
 }
 
-/* Fading animation */
-.fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@-webkit-keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
-
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
-
 .dots {
   margin: 30px;
 }
@@ -234,4 +215,38 @@ img {
   height: 30px;
   display: flex;
   justify-content: center;
+}
+
+@media only screen and (max-width: 792px) {
+
+  .main-block-right{
+    width: 100%;
+    margin: 1%;
+  }
+
+  .main-block-left{
+    width: 100%;
+    margin: 1%;
+  }
+
+  img{
+    width: 55%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+
+  .main-block-right{
+    width: 100%;
+    margin: 1%;
+  }
+
+  .main-block-left{
+    width: 100%;
+    margin: 1%;
+  }
+
+  img{
+    width: 65%;
+  }
 }

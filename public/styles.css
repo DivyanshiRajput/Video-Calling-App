@@ -89,13 +89,15 @@ body.dark-mode .main_right_two {
 
 .showChat .main_right{
   display: flex;
-  flex: 0.3;
+  /* flex: 0.3; */
+  min-width: 375px;
   max-width: 375px;
 }
 
 .showParticipants .main_right_two {
   display: flex;
-  flex: 0.3;
+  /* flex: 0.3; */
+  min-width: 375px;
   max-width: 375px;
 }
 
@@ -330,4 +332,84 @@ body.dark-mode .copy_button {
 body.dark-mode #participants-list {
   color: #ffffff;
   background-color: #5c6267;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 20px;
+}
+
+body.dark-mode .close{
+  color: white;
+}
+
+@media only screen and (max-width: 1043px) {
+
+  .main_controls span{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .main_left{
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .main_right{
+  height: 100%;
+  position: fixed;
+  margin: 0px;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  }
+
+  .main_right_two{
+  height: 100%;
+  position: fixed;
+  margin: 0px;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  }
+
+  .body{
+    overflow: hidden;
+  }
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    top: 1px;
+    right: 20px;
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 930px) {
+
+  .main_controls{
+    position: relative;
+    bottom: 0px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  .main_controls i{
+    font-size: 20px;
+  }
+
+  .control_button {
+    min-width: 50px;
+  }
 }

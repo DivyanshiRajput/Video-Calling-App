@@ -20,18 +20,6 @@ body.dark-mode {
   color: #202124;
 }
 
-/*
-#202124 - background
-#3C4043 - foreground
-#FFFFFF - icon buttons
-#E8453C - cut/ red
-#3888F6 - send blue
-#434649 - button hover color
-#2571D5 - send blue
-#434649 - button hover color
-#6D767D - a lighter foreground
-*/
-
 .main {
   height: 100vh;
   display: flex;
@@ -178,7 +166,6 @@ body.dark-mode .message_container input:focus {
 }
 
 .messageRight {
-  /* display: inline-block; */
   color: #ffffff;
   padding: 8px 12px;
   border-radius: 8px;
