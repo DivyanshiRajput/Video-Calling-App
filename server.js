@@ -50,7 +50,7 @@ app.get('/:room', function(req, res){
 });
 
 app.get('/:room/leave', function(req, res){
-    res.render('leave', {roomId: req.params.room});
+    res.render('leave');
 })
 
 app.get('/:room/chatroom', function(req, res){
