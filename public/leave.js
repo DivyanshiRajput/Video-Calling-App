@@ -7,8 +7,12 @@ avg_ref.on('value',(snap)=>{
   document.getElementById('rating').innerHTML = 'Rated ' +  snap.val().toFixed(1) + '/5.0 ★';
 });
 
-function rejoin(){
-    window.history.back();
+function rejoinVideoRoom(){
+    window.location.href = `../${ROOM_ID}`;
+};
+
+function rejoinChatRoom(){
+    window.location.href = `../${ROOM_ID}/chatroom`;
 };
 
 function returnToHome(){

@@ -15,6 +15,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
         integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
         crossorigin="anonymous"></script>
+    <script>
+        const ROOM_ID = "<%= roomId %>";
+    </script>
 </head>
 <body>
   <div class="main-block">
@@ -23,7 +26,8 @@
     </div>
 
     <div class="buttons" >
-      <button onclick="rejoin()" type="button" class="rejoin-button"> Rejoin </button>
+      <button onclick="rejoinChatRoom()" type="button" class="rejoin-button"> Rejoin Chat</button>
+      <button onclick="rejoinVideoRoom()" type="button" class="rejoin-button"> Rejoin Room</button>
       <button onclick="returnToHome()" type="button" class="return-to-home"> Return to Home </button>
     </div>
 
