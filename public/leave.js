@@ -12,7 +12,7 @@ function rejoin(){
 }
 
 function returnToHome(){
-    window.location.href="../";
+    window.location.href = "../";
 }
 
 function addFeedback(){

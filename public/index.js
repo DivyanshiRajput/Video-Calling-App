@@ -6,8 +6,6 @@ avg_ref.on('value',(snap)=>{
   document.getElementById('rating').innerHTML = 'Rated ' +  snap.val().toFixed(1) + '/5.0 ★';
 });
 
-
-
 function redirectToCreateRoom(){
   window.location += "create";
 }
