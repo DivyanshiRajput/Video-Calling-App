@@ -5,6 +5,19 @@ myVideo.muted = true;
 
 const user = prompt("Enter your name:");
 
+// let user;
+// if (localStorage.getItem("user") != null){
+//   user = localStorage.getItem("user");
+// }
+//
+// else{
+//   user = "";
+//   while(user == ""){
+//     user = prompt("Enter your name:");
+//   }
+//   localStorage.setItem("user", user);
+// }
+
 var currentUserId;
 var userList = [];
 
@@ -31,11 +44,11 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '3000',
 });
 
 let myVideoStream;
-navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
+navigator.mediaDevices.getUserMedia({ video: true, audio: false})
 .then(stream => {
 
     myVideoStream = stream;
@@ -45,14 +58,16 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true,})
     peer.on('call', call => {
       call.answer(stream);
       userList = userList.concat(call.metadata.userName);
+      // console.log(userList);
       updateParticipantsList();
-        if(call.metadata.type == 'video'){
-          const video = document.createElement('video');
-          video.setAttribute('id', call.peer);
-          call.on('stream', userVideoStream => {
-              addVideoStream(video, userVideoStream);
-          });
-        }
+
+      if(call.metadata.type == 'video'){
+        const video = document.createElement('video');
+        video.setAttribute('id', call.peer);
+        call.on('stream', userVideoStream => {
+            addVideoStream(video, userVideoStream);
+        });
+      }
     });
 
     socket.on('user-connected', (userId, userName) => {
@@ -187,7 +202,6 @@ socket.on('createMessage', function(message, userName){
 
 // scroll function for chat box
 const scrollBottom = () => {
-  // console.log("hi");
     var d = $('.chat_window');
     d.scrollTop(d.prop("scrollHeight"));
 };
