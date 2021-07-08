@@ -348,6 +348,10 @@ const updateChatFirebase = (userName, message) => {
   ref.push(newMessage);
 }
 
+function gotoChatRoom(){
+  window.location.href += "/chatroom";
+}
+
 // function shareScreen() {
 //         if ( this.userMediaAvailable() ) {
 //             return navigator.mediaDevices.getDisplayMedia( {

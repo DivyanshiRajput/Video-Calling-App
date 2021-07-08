@@ -225,3 +225,7 @@ const updateChatFirebase = (userName, message) => {
   };
   ref.push(newMessage);
 }
+
+function gotoVideoRoom(){
+  window.location.href = `../${ROOM_ID}`;
+}
