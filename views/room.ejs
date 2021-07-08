@@ -21,7 +21,9 @@
         crossorigin="anonymous"></script>
     <script>
         const ROOM_ID = "<%= roomId %>";
-
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
 </head>
 <body>
@@ -79,9 +81,12 @@
         <div class="main_right" id='chat-box'>
         <!-- chat area -->
             <div class="main_header">
-                <h6>Chat</h6>
+                <div style= "flex:1;"></div>
+                <h6 style = "flex: 4;" >Chat</h6>
+                <i onclick="gotoChatRoom()" class="fas fa-external-link-alt" style = "flex: 0.5;" data-toggle="tooltip" title="Join chat room"></i>
+                <i onclick="showChat()" class="fas fa-times close" style = "flex: 0.5;"></i>
             </div>
-            <span onclick="showChat()" class="close">&#215</span>
+
             <div class="chat_window">
                 <ul class="messages" id="all_messages">
                 </ul>
@@ -97,9 +102,11 @@
         <div class="main_right_two" id="participants-list-box">
         <!-- participants list -->
             <div class="main_header">
-                <h6>Participants List</h6>
+                <div style= "flex:0.5;"></div>
+                <h6 style = "flex: 4;" >Participants List</h6>
+                <i onclick="showParticipants()" class="fas fa-times close" style = "flex: 0.5;"></i>
             </div>
-            <span onclick="showParticipants()" class="close">&#215</span>
+
             <div class="chat_window">
                 <ol type="1" id="participants-list">
                 </ol>

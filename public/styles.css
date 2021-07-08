@@ -166,8 +166,17 @@ body.dark-mode .control_button:hover {
 
 .main_header {
   color: black;
+  display: flex;
   text-align: center;
   margin: 8px;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.main_header h6 {
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
 }
 
 body.dark-mode .main_header {
@@ -334,16 +343,32 @@ body.dark-mode #participants-list {
   background-color: #5c6267;
 }
 
-.close {
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  font-size: 20px;
-}
-
 body.dark-mode .close{
   color: white;
+}
+
+body.dark-mode .fa-external-link-alt{
+  color: white;
+}
+
+.close:hover{
+  color: #db5e52;
+  cursor: pointer;
+}
+
+.fa-external-link-alt:hover{
+  cursor: pointer;
+  color: #3888f6;
+}
+
+body.dark-mode .close:hover{
+  color: #db5e52;
+  cursor: pointer;
+}
+
+body.dark-mode .fa-external-link-alt:hover{
+  cursor: pointer;
+  color: #3888f6;
 }
 
 @media only screen and (max-width: 1043px) {
@@ -384,14 +409,6 @@ body.dark-mode .close{
 
   .body{
     overflow: hidden;
-  }
-
-  .close {
-    cursor: pointer;
-    position: absolute;
-    top: 1px;
-    right: 20px;
-    font-size: 20px;
   }
 }
 
