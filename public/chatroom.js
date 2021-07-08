@@ -24,8 +24,20 @@ const audioTrack = createEmptyAudioTrack();
 const videoTrack = createEmptyVideoTrack({ width:0, height:0 });
 const mediaStream = new MediaStream([audioTrack, videoTrack]);
 
-// userName input
 const user = prompt("Enter your name:");
+// let user;
+// if (localStorage.getItem("user") != null){
+//   user = localStorage.getItem("user");
+// }
+//
+// else{
+//   user = "";
+//   while(user == ""){
+//     user = prompt("Enter your name:");
+//   }
+//   localStorage.setItem("user", user);
+// }
+
 
 var currentUserId;
 var userList = [];
@@ -49,13 +61,14 @@ sorted_room_ref.once('value',(snap) => {
       $('#all_messages').append(`<li class ="messageLeft">${messages[key]['userName']}<br/>${messages[key]['message']}</li>`);
     }
   });
+  scrollBottom();
 
 });
 
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '3000',
 });
 
 peer.on('open', id => {
@@ -150,7 +163,7 @@ socket.on('createMessage', function(message, userName){
   }
 
   scrollBottom();
-  });
+});
 
 // scroll function for chat box
 const scrollBottom = () => {
@@ -176,18 +189,6 @@ const darkLight = () =>{
     document.querySelector('#mode').innerHTML = html;
   }
 }
-
-// chat toggle window
-const showChat = (e) => {
-    if(document.body.classList.contains('showParticipants')){
-      document.body.classList.toggle('showParticipants');
-      document.getElementById('list_btn').classList.toggle("active");
-    }
-
-    e.classList.toggle("active");
-    document.body.classList.toggle("showChat");
-    scrollBottom();
-};
 
 //invite link popup functions
 const showInvitePopup = () => {
@@ -216,18 +217,6 @@ const copyToClipboard = () => {
     alert("Copied: " + copyText.value );
     hideInvitePopup();
 }
-
-// show participants list
-const showParticipants = (e) => {
-
-    if(document.body.classList.contains('showChat')){
-      document.body.classList.toggle('showChat');
-      document.getElementById('chat_btn').classList.toggle("active");
-    }
-    document.body.classList.toggle("showParticipants");
-    e.classList.toggle("active");
-
-};
 
 // update chat in firebasejs
 const updateChatFirebase = (userName, message) => {
