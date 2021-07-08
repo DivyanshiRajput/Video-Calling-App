@@ -21,6 +21,7 @@
         crossorigin="anonymous"></script>
     <script>
         const ROOM_ID = "<%= roomId %>";
+
     </script>
 </head>
 <body>
@@ -58,12 +59,12 @@
                         <span>Invite</span>
                     </div>
 
-                    <div onclick = "showParticipants(this)" class="control_button" id="list_btn">
+                    <div onclick = "showParticipants()" class="control_button" id="list_btn">
                         <i class="fas fa-user-friends"></i>
                         <span>Participants</span>
                     </div>
 
-                    <div onclick="showChat(this)" class="control_button" id="chat_btn">
+                    <div onclick="showChat()" class="control_button" id="chat_btn">
                         <i class="fas fa-comment-alt"></i>
                         <span>Chat</span>
                     </div>
@@ -80,6 +81,7 @@
             <div class="main_header">
                 <h6>Chat</h6>
             </div>
+            <span onclick="showChat()" class="close">&#215</span>
             <div class="chat_window">
                 <ul class="messages" id="all_messages">
                 </ul>
@@ -97,7 +99,7 @@
             <div class="main_header">
                 <h6>Participants List</h6>
             </div>
-
+            <span onclick="showParticipants()" class="close">&#215</span>
             <div class="chat_window">
                 <ol type="1" id="participants-list">
                 </ol>
