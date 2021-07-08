@@ -58,7 +58,6 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true})
     peer.on('call', call => {
       call.answer(stream);
       userList = userList.concat(call.metadata.userName);
-      // console.log(userList);
       updateParticipantsList();
 
       if(call.metadata.type == 'video'){

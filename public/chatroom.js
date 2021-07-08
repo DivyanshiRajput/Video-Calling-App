@@ -38,7 +38,6 @@ else{
   localStorage.setItem("user", user);
 }
 
-
 var currentUserId;
 var userList = [];
 
@@ -62,13 +61,12 @@ sorted_room_ref.once('value',(snap) => {
     }
   });
   scrollBottom();
-
 });
 
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '433',
 });
 
 peer.on('open', id => {
@@ -82,8 +80,8 @@ peer.on('call', call => {
     call.answer(mediaStream);
     userList = userList.concat(call.metadata.userName);
     updateParticipantsList();
-
 });
+
 
 peer.on('close', id => {
     socket.emit ('disconnect', id);
@@ -92,13 +90,13 @@ peer.on('close', id => {
 socket.on('user-connected', (userId, userName) => {
     userList = userList.concat(userName);
     updateParticipantsList();
-    connectToNewUser(userId);
+    connectToNewUser(userId, mediaStream);
 });
 
 socket.on('user-connected-chat', (userId, userName) => {
     userList = userList.concat(userName);
     updateParticipantsList();
-    connectToNewUser(userId);
+    connectToNewUser(userId, mediaStream);
 });
 
 socket.on('user-disconnected', (userId, userName) => {
@@ -109,10 +107,13 @@ socket.on('user-disconnected', (userId, userName) => {
     updateParticipantsList();
 });
 
-const connectToNewUser = (userId) => {
-    options = {metadata: {"userName":user}};
-    const call = peer.call(userId, mediaStream, options);
+const connectToNewUser = (userId, mediaStream) => {
+  options = {metadata: {"userName":user}};
+  setTimeout(function() {
+  const call = peer.call(userId, mediaStream, options);
+  }, 1000);
 };
+
 
 function leave(){
     if (window.confirm("Are you sure you want to leave the room?")){
@@ -154,16 +155,14 @@ $('html').keydown((e) => {
 
 socket.on('createMessage', function(message, userName){
 
-  console.log(message);
   if (userName === user){
     $('#all_messages').append(`<li class ="messageRight">${message}</li>`);
   }
   else{
     $('#all_messages').append(`<li class ="messageLeft">${userName}<br/>${message}</li>`);
   }
-
   scrollBottom();
-});
+} );
 
 // scroll function for chat box
 const scrollBottom = () => {
