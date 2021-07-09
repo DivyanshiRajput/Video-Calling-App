@@ -1,5 +1,9 @@
 const socket = io('/');
 
+var firebaseConfig = FIREBASE_CONFIG;
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
 // creating fake media stream
 const createEmptyAudioTrack = () => {
   const ctx = new AudioContext();
@@ -26,11 +30,13 @@ const mediaStream = new MediaStream([audioTrack, videoTrack]);
 
 // const user = prompt("Enter your name:");
 let user;
+var currentUserId;
+var userList = [];
+
 if (localStorage.getItem("user") != null){
   user = localStorage.getItem("user");
   user += " 💬";
 }
-
 else{
   user = "";
   while(user == ""){
@@ -43,14 +49,7 @@ else{
   user += " 💬";
 }
 
-var currentUserId;
-var userList = [];
-
 // setting up firebase
-var firebaseConfig = FIREBASE_CONFIG;
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
 const room_ref = db.ref("Chatroom/" + ROOM_ID);
 const sorted_room_ref = db.ref("Chatroom/" + ROOM_ID).orderByChild('timestamp');
 
@@ -87,7 +86,6 @@ peer.on('call', call => {
     updateParticipantsList();
 });
 
-
 peer.on('close', id => {
     socket.emit ('disconnect', id);
 })
@@ -116,18 +114,8 @@ const connectToNewUser = (userId, mediaStream) => {
   options = {metadata: {"userName":user}};
   setTimeout(function() {
   const call = peer.call(userId, mediaStream, options);
-  }, 1000);
+}, 1000);
 };
-
-
-function leave(){
-    if (window.confirm("Are you sure you want to leave the room?")){
-        window.location += '/leave';
-    }
-    else{
-        return;
-    }
-}
 
 const updateParticipantsList = () => {
   var ele  = document.getElementById('participants-list');
@@ -137,19 +125,7 @@ const updateParticipantsList = () => {
   });
 }
 
-const timestampConverter = (timestamp) =>{
-
-    var date = new Date(timestamp);
-    // date = date.toLocalString(undefined, {timeZone: 'Asia/Kolkata'});
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var formattedTime = hours + ':' + minutes.substr(-2);
-    return formattedTime;
-
-  }
-
 let text = $('#chat_message');
-
 $("#send").click(() => {
     if (text.val() != 0)
     {
@@ -203,32 +179,17 @@ const darkLight = () =>{
   }
 }
 
-//invite link popup functions
-const showInvitePopup = () => {
-    if (document.getElementById("invite").classList.contains("showInvite")){
-        hideInvitePopup();
-    }
-    else{
-        document.getElementById("invite").classList.add("showInvite");
-        document.getElementById("invite_btn").classList.add("active");
-        document.getElementById("roomLink").value = window.location.href;
-    }
-};
-
-const hideInvitePopup = () => {
-    document.getElementById("invite").classList.remove("showInvite");
-    document.getElementById("invite_btn").classList.remove("active");
+function gotoVideoRoom(){
+  window.location.href = `../${ROOM_ID}`;
 }
 
-const copyToClipboard = () => {
-    var copyText = document.getElementById("roomLink");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-
-    document.execCommand('copy');
-
-    alert("Copied: " + copyText.value );
-    hideInvitePopup();
+function leave(){
+    if (window.confirm("Are you sure you want to leave the room?")){
+        window.location += '/leave';
+    }
+    else{
+        return;
+    }
 }
 
 // update chat in firebasejs
@@ -242,6 +203,11 @@ const updateChatFirebase = (userName, message) => {
   ref.push(newMessage);
 }
 
-function gotoVideoRoom(){
-  window.location.href = `../${ROOM_ID}`;
-}
+const timestampConverter = (timestamp) =>{
+    var date = new Date(timestamp);
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var formattedTime = hours + ':' + minutes.substr(-2);
+    return formattedTime;
+
+  }
