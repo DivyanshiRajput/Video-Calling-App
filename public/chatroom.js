@@ -28,7 +28,7 @@ const mediaStream = new MediaStream([audioTrack, videoTrack]);
 let user;
 if (localStorage.getItem("user") != null){
   user = localStorage.getItem("user");
-  user += " 💬";
+  // user += " 💬";
 }
 
 else{
@@ -40,7 +40,7 @@ else{
     window.history.back();
   }
   localStorage.setItem("user", user);
-  user += " 💬";
+  // user += " 💬";
 }
 
 var currentUserId;
