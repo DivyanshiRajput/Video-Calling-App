@@ -3,18 +3,12 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
-var firebaseConfig = FIREBASE_CONFIG;
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
 let user;
-var currentUserId;
-var userList = [];
-
 if (localStorage.getItem("user") != null){
   user = localStorage.getItem("user");
   user += " 📞";
 }
+
 else{
   user = "";
   while(user == ""){
@@ -26,6 +20,13 @@ else{
   localStorage.setItem("user", user);
   user += " 📞";
 }
+
+var currentUserId;
+var userList = [];
+
+var firebaseConfig = FIREBASE_CONFIG;
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
 const room_ref = db.ref("Chatroom/" + ROOM_ID);
 const sorted_room_ref = db.ref("Chatroom/" + ROOM_ID).orderByChild('timestamp');
@@ -94,17 +95,6 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true})
     })
 });
 
-peer.on('open', id => {
-    currentUserId = id;
-    userList = userList.concat(user);
-    updateParticipantsList();
-    socket.emit('join-room', ROOM_ID, id, user, "video");
-});
-
-peer.on('close', id => {
-    socket.emit ('disconnect', id);
-})
-
 const connectToNewUser = (userId, stream) => {
     options = {metadata: {"userName":user, "type":'video'}};
     setTimeout(function() {
@@ -116,6 +106,7 @@ const connectToNewUser = (userId, stream) => {
     });
   }, 500);
 };
+
 
 const connectToNewUserChat = (userId, stream) => {
   options = {metadata: {"userName":user, "type":'chat'}};
@@ -131,13 +122,24 @@ const disconnectUser = (userId, stream) => {
   resizeGrid();
 }
 
-const addVideoStream = function(video, stream){
-    video.srcObject = stream;
-    video.addEventListener('loadedmetadata', function(){
-        video.play();
-    });
-    videoGrid.append(video);
-    resizeGrid();
+peer.on('open', id => {
+    currentUserId = id;
+    userList = userList.concat(user);
+    updateParticipantsList();
+    socket.emit('join-room', ROOM_ID, id, user, "video");
+});
+
+peer.on('close', id => {
+    socket.emit ('disconnect', id);
+})
+
+function leave(){
+    if (window.confirm("Are you sure you want to leave the room?")){
+        window.location += '/leave';
+    }
+    else{
+        return;
+    }
 }
 
 const updateParticipantsList = () => {
@@ -148,8 +150,61 @@ const updateParticipantsList = () => {
   });
 }
 
-// real time chat functionality
+const addVideoStream = function(video, stream){
+    video.srcObject = stream;
+    video.addEventListener('loadedmetadata', function(){
+        video.play();
+    });
+    videoGrid.append(video);
+    resizeGrid();
+}
+
+const resizeGrid = () => {
+  let totalUsers = document.getElementsByTagName("video").length;
+  if (totalUsers == 1){
+    document.getElementById("video-grid").style.gridTemplateColumns = "100%" ;
+    document.getElementById("video-grid").style.gridTemplateRows = "100%" ;
+  }
+
+  else if (totalUsers == 2){
+    document.getElementById("video-grid").style.gridTemplateColumns = "50% 50%" ;
+    document.getElementById("video-grid").style.gridTemplateRows = "100%" ;
+  }
+
+  else if (totalUsers == 3){
+    document.getElementById("video-grid").style.gridTemplateColumns = "33% 33% 33%" ;
+    document.getElementById("video-grid").style.gridTemplateRows = "100%" ;
+  }
+
+  else if (totalUsers == 4){
+    document.getElementById("video-grid").style.gridTemplateColumns = "50% 50%" ;
+    document.getElementById("video-grid").style.gridTemplateRows = "50% 50%" ;
+  }
+
+  else if (totalUsers == 5 || totalUsers == 6){
+    document.getElementById("video-grid").style.gridTemplateColumns = "33% 33% 33%" ;
+    document.getElementById("video-grid").style.gridTemplateRows = "50% 50%" ;
+  }
+
+  else if (totalUsers > 7){
+    document.getElementById("video-grid").style.gridTemplateColumns = "33% 33% 33%" ;
+    document.getElementById("video-grid").style.gridTemplateRows = "33% 33% 33%" ;
+  }
+}
+
+const timestampConverter = (timestamp) =>{
+
+    var date = new Date(timestamp);
+    // date = date.toLocalString(undefined, {timeZone: 'Asia/Kolkata'});
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var formattedTime = hours + ':' + minutes.substr(-2);
+    return formattedTime;
+
+  }
+
 let text = $('#chat_message');
+
 $("#send").click(() => {
     if (text.val() != 0)
     {
@@ -158,6 +213,7 @@ $("#send").click(() => {
         socket.emit('message', text.val());
         text.val('');
     }
+
 });
 
 $('html').keydown((e) => {
@@ -171,12 +227,14 @@ $('html').keydown((e) => {
 });
 
 socket.on('createMessage', function(message, userName){
+
   if (userName === user){
     $('#all_messages').append(`<li class ="messageRight">${message} <span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
   }
   else{
     $('#all_messages').append(`<li class ="messageLeft">${userName}<br/>${message}<span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
   }
+
   scrollBottom();
   });
 
@@ -278,10 +336,6 @@ const showChat = (e) => {
     scrollBottom();
 };
 
-function gotoChatRoom(){
-  window.location.href += "/chatroom";
-}
-
 //invite link popup functions
 const showInvitePopup = () => {
     if (document.getElementById("invite").classList.contains("showInvite")){
@@ -322,16 +376,6 @@ const showParticipants = () => {
 
 };
 
-// leave room function
-function leave(){
-    if (window.confirm("Are you sure you want to leave the room?")){
-        window.location += '/leave';
-    }
-    else{
-        return;
-    }
-}
-
 // update chat in firebasejs
 const updateChatFirebase = (userName, message) => {
   var ref = db.ref("Chatroom/" + ROOM_ID);
@@ -343,48 +387,8 @@ const updateChatFirebase = (userName, message) => {
   ref.push(newMessage);
 }
 
-const timestampConverter = (timestamp) =>{
-
-    var date = new Date(timestamp);
-    // date = date.toLocalString(undefined, {timeZone: 'Asia/Kolkata'});
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var formattedTime = hours + ':' + minutes.substr(-2);
-    return formattedTime;
-
-}
-
-const resizeGrid = () => {
-  let totalUsers = document.getElementsByTagName("video").length;
-  if (totalUsers == 1){
-    document.getElementById("video-grid").style.gridTemplateColumns = "100%" ;
-    document.getElementById("video-grid").style.gridTemplateRows = "100%" ;
-  }
-
-  else if (totalUsers == 2){
-    document.getElementById("video-grid").style.gridTemplateColumns = "50% 50%" ;
-    document.getElementById("video-grid").style.gridTemplateRows = "100%" ;
-  }
-
-  else if (totalUsers == 3){
-    document.getElementById("video-grid").style.gridTemplateColumns = "33% 33% 33%" ;
-    document.getElementById("video-grid").style.gridTemplateRows = "100%" ;
-  }
-
-  else if (totalUsers == 4){
-    document.getElementById("video-grid").style.gridTemplateColumns = "50% 50%" ;
-    document.getElementById("video-grid").style.gridTemplateRows = "50% 50%" ;
-  }
-
-  else if (totalUsers == 5 || totalUsers == 6){
-    document.getElementById("video-grid").style.gridTemplateColumns = "33% 33% 33%" ;
-    document.getElementById("video-grid").style.gridTemplateRows = "50% 50%" ;
-  }
-
-  else if (totalUsers > 7){
-    document.getElementById("video-grid").style.gridTemplateColumns = "33% 33% 33%" ;
-    document.getElementById("video-grid").style.gridTemplateRows = "33% 33% 33%" ;
-  }
+function gotoChatRoom(){
+  window.location.href += "/chatroom";
 }
 
 // function shareScreen() {
