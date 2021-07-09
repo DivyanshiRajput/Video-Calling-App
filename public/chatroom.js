@@ -28,6 +28,7 @@ const mediaStream = new MediaStream([audioTrack, videoTrack]);
 let user;
 if (localStorage.getItem("user") != null){
   user = localStorage.getItem("user");
+  user += " 💬";
 }
 
 else{
@@ -39,6 +40,7 @@ else{
     window.history.back();
   }
   localStorage.setItem("user", user);
+  user += " 💬";
 }
 
 var currentUserId;
@@ -69,7 +71,7 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '3000',
 });
 
 peer.on('open', id => {
