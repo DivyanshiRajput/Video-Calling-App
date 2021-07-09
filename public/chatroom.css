@@ -175,6 +175,8 @@ body.dark-mode .message_container input:focus {
   min-width: 100px;
   max-width: 300px;
   width: fit-content;
+  position: relative;
+  padding-bottom: 20px;
 }
 
 .messageLeft {
@@ -187,6 +189,8 @@ body.dark-mode .message_container input:focus {
   min-width: 100px;
   max-width: 300px;
   width: fit-content;
+  position: relative;
+  padding-bottom: 20px;
 }
 
 body.dark-mode .messageRight {
@@ -289,4 +293,20 @@ body.dark-mode #participants-list {
   border-width: 1px;
   margin: 0px 10px;
   flex: 1;
+}
+
+.timestamp {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 11px;
+  color: lightblue;
+}
+
+.messageLeft .timestamp {
+  color: grey;
+}
+
+body.dark-mode .messageLeft .timestamp {
+  color: lightgrey;
 }

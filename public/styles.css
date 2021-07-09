@@ -231,18 +231,30 @@ body.dark-mode .message_container input:focus {
 
 .messageRight {
   color: #ffffff;
-  padding: 8px 8px 8px 16px;
+  padding: 8px 12px;
   border-radius: 8px;
   background-color: #3888f6;
-  margin: 8px 8px 8px 60px;
+  margin: 8px;
+  margin-left: auto;
+  min-width: 100px;
+  max-width: 300px;
+  width: fit-content;
+  position: relative;
+  padding-bottom: 20px;
 }
 
 .messageLeft {
   color: #000000;
-  padding: 8px 8px 8px 16px;
+  padding: 8px 16px;
   border-radius: 8px;
   background-color: white;
-  margin: 8px 60px 8px 8px;
+  margin: 8px;
+  margin-right: auto;
+  min-width: 100px;
+  max-width: 300px;
+  width: fit-content;
+  position: relative;
+  padding-bottom: 20px;
 }
 
 body.dark-mode .messageRight {
@@ -369,6 +381,22 @@ body.dark-mode .close:hover{
 body.dark-mode .fa-external-link-alt:hover{
   cursor: pointer;
   color: #3888f6;
+}
+
+.timestamp {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 11px;
+  color: lightblue;
+}
+
+.messageLeft .timestamp {
+  color: grey;
+}
+
+body.dark-mode .messageLeft .timestamp {
+  color: lightgrey;
 }
 
 @media only screen and (max-width: 1043px) {

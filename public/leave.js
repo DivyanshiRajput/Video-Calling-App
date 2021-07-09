@@ -4,7 +4,7 @@ const db = firebase.database();
 
 const avg_ref = db.ref('Average/avg');
 avg_ref.on('value',(snap)=>{
-  document.getElementById('rating').innerHTML = 'Rated ' +  snap.val().toFixed(1) + '/5.0 ★';
+  document.getElementById('rating').innerHTML = snap.val().toFixed(1) + '/5.0 ★';
 });
 
 function rejoin(){

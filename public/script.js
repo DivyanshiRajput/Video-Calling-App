@@ -15,6 +15,9 @@ else{
   while(user == ""){
     user = prompt("Enter your name:");
   }
+  if (user == null){
+    window.history.back();
+  }
   localStorage.setItem("user", user);
 }
 
@@ -33,12 +36,13 @@ sorted_room_ref.once('value',(snap) => {
 
   Object.keys(messages).forEach(function (key){
     if (messages[key]['userName'] === user){
-      $('#all_messages').append(`<li class ="messageRight">${messages[key]['message']}</li>`);
+      $('#all_messages').append(`<li class ="messageRight">${messages[key]['message']}<span class="timestamp">${timestampConverter(messages[key]['timestamp'])}</span></li>`);
     }
     else{
-      $('#all_messages').append(`<li class ="messageLeft">${messages[key]['userName']}<br/>${messages[key]['message']}</li>`);
+      $('#all_messages').append(`<li class ="messageLeft">${messages[key]['userName']}<br/>${messages[key]['message']}<span class="timestamp">${timestampConverter(messages[key]['timestamp'])}</span></li>`);
     }
   });
+  scrollBottom();
 });
 
 var peer = new Peer(undefined, {
@@ -166,6 +170,17 @@ const addVideoStream = function(video, stream){
 //         }}
 // };
 
+const timestampConverter = (timestamp) =>{
+
+    var date = new Date(timestamp);
+    // date = date.toLocalString(undefined, {timeZone: 'Asia/Kolkata'});
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var formattedTime = hours + ':' + minutes.substr(-2);
+    return formattedTime;
+
+  }
+
 let text = $('#chat_message');
 
 $("#send").click(() => {
@@ -190,10 +205,10 @@ $('html').keydown((e) => {
 socket.on('createMessage', function(message, userName){
 
   if (userName === user){
-    $('#all_messages').append(`<li class ="messageRight">${message}</li>`);
+    $('#all_messages').append(`<li class ="messageRight">${message} <span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
   }
   else{
-    $('#all_messages').append(`<li class ="messageLeft">${userName}<br/>${message}</li>`);
+    $('#all_messages').append(`<li class ="messageLeft">${userName}<br/>${message}<span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
   }
 
   scrollBottom();
