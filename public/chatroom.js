@@ -62,7 +62,7 @@ sorted_room_ref.once('value',(snap) => {
       $('#all_messages').append(`<li class ="messageRight">${messages[key]['message']}<span class="timestamp">${timestampConverter(messages[key]['timestamp'])}</span></li>`);
     }
     else{
-      $('#all_messages').append(`<li class ="messageLeft">${messages[key]['userName']}<br/>${messages[key]['message']}<span class="timestamp">${timestampConverter(messages[key]['timestamp'])}</span></li>`);
+      $('#all_messages').append(`<li class ="messageLeft"><b>${messages[key]['userName']}</b><br/>${messages[key]['message']}<span class="timestamp">${timestampConverter(messages[key]['timestamp'])}</span></li>`);
     }
   });
   scrollBottom();
@@ -71,7 +71,7 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '3000',
 });
 
 peer.on('open', id => {
@@ -173,7 +173,7 @@ socket.on('createMessage', function(message, userName){
     $('#all_messages').append(`<li class ="messageRight">${message} <span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
   }
   else{
-    $('#all_messages').append(`<li class ="messageLeft">${userName}<br/>${message}<span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
+    $('#all_messages').append(`<li class ="messageLeft"><b>${userName}</b><br/>${message}<span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
   }
   scrollBottom();
 } );
