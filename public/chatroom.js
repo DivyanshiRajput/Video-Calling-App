@@ -28,7 +28,7 @@ const mediaStream = new MediaStream([audioTrack, videoTrack]);
 let user;
 if (localStorage.getItem("user") != null){
   user = localStorage.getItem("user");
-  // user += " 💬";
+  user += " 💬";
 }
 
 else{
@@ -40,7 +40,7 @@ else{
     window.history.back();
   }
   localStorage.setItem("user", user);
-  // user += " 💬";
+  user += " 💬";
 }
 
 var currentUserId;
@@ -58,7 +58,7 @@ sorted_room_ref.once('value',(snap) => {
   var messages = snap.val();
 
   Object.keys(messages).forEach(function (key){
-    if (messages[key]['userName'] === user){
+    if (messages[key]['userName'] === user.substring(0, user.length -3)){
       $('#all_messages').append(`<li class ="messageRight">${messages[key]['message']}<span class="timestamp">${timestampConverter(messages[key]['timestamp'])}</span></li>`);
     }
     else{
@@ -71,7 +71,7 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '3000',
+    port: '443',
 });
 
 peer.on('open', id => {
@@ -169,7 +169,7 @@ $('html').keydown((e) => {
 });
 
 socket.on('createMessage', function(message, userName){
-  if (userName === user){
+  if (userName === user.substring(0, user.length - 3)){
     $('#all_messages').append(`<li class ="messageRight">${message} <span class="timestamp">${timestampConverter(Date.now())}</span></li>`);
   }
   else{
@@ -235,7 +235,7 @@ const copyToClipboard = () => {
 const updateChatFirebase = (userName, message) => {
   var ref = db.ref("Chatroom/" + ROOM_ID);
   var newMessage = {
-    'userName':userName,
+    'userName':userName.substring(0, userName.length-3),
     'message':message.val(),
     'timestamp':Date.now()
   };

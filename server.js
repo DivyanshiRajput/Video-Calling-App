@@ -78,7 +78,7 @@ socketIo.on('connection', socket => {
       }
 
       socket.on('message', function(message){
-        socketIo.to(roomId).emit('createMessage', message, userName);
+        socketIo.to(roomId).emit('createMessage', message, userName.substring(0, userName.length - 3));
       });
 
       socket.on('disconnect', id => {
