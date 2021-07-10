@@ -48,11 +48,11 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '3000',
+    port: '443',
 });
 
 let myVideoStream;
-navigator.mediaDevices.getUserMedia({ video: true, audio: false})
+navigator.mediaDevices.getUserMedia({ video: true, audio: true})
 .then(stream => {
 
     myVideoStream = stream;
@@ -165,9 +165,10 @@ const addVideoStream = function(video, stream){
     video.addEventListener('loadedmetadata', function(){
         video.play();
     });
-    videoGrid.append(video);
+     videoGrid.append(video);
     resizeGrid();
 }
+
 
 const resizeGrid = () => {
   let totalUsers = document.getElementsByTagName("video").length;
