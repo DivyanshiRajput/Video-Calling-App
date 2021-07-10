@@ -85,6 +85,14 @@ socketIo.on('connection', socket => {
         socket.to(roomId).emit('user-disconnected', userId, userName);
         console.log("user disconnected");
       });
+
+      socket.on('mute', (userId, userName) => {
+        socket.to(roomId).emit('user-mute', userId, userName);
+      });
+
+      socket.on('unmute', (userId, userName) => {
+        socket.to(roomId).emit('user-unmute', userId, userName);
+      });
     });
 });
 

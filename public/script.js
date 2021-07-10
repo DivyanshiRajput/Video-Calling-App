@@ -48,7 +48,7 @@ sorted_room_ref.once('value',(snap) => {
 var peer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '3000',
 });
 
 let myVideoStream;
@@ -92,7 +92,17 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true})
         }
         updateParticipantsList();
         disconnectUser(userId, stream);
-    })
+    });
+
+    socket.on('user-mute', (userId, userName) => {
+        document.getElementById(userId).classList.toggle('display-mute');
+        console.log("receiving req for mute");
+    });
+
+    socket.on('user-unmute', (userId, userName) => {
+        document.getElementById(userId).classList.toggle('display-mute');
+        console.log("receiving req for unmute");
+    });
 });
 
 const connectToNewUser = (userId, stream) => {
@@ -266,11 +276,15 @@ function muteFunction(){
     if (enabled){
         myVideoStream.getAudioTracks()[0].enabled = false;
         setUnmuteButton();
+        socket.emit('mute', currentUserId, user);
+        document.getElementById(currentUserId).classList.toggle('display-mute');
     }
 
     else{
         setMuteButton();
         myVideoStream.getAudioTracks()[0].enabled = true;
+        socket.emit('unmute', currentUserId, user);
+        document.getElementById(currentUserId).classList.toggle('display-mute');
     }
 }
 
