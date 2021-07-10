@@ -20,18 +20,6 @@ body.dark-mode {
   color: #202124;
 }
 
-/*
-#202124 - background
-#3C4043 - foreground
-#FFFFFF - icon buttons
-#E8453C - cut/ red
-#3888F6 - send blue
-#434649 - button hover color
-#2571D5 - send blue
-#434649 - button hover color
-#6D767D - a lighter foreground
-*/
-
 #video-grid {
   display: grid;
   height: 100%;
@@ -67,7 +55,6 @@ video {
 }
 
 .main_right {
-
   border-radius: 16px;
   flex-direction: column;
   background-color: #f1f4f9;
@@ -81,12 +68,9 @@ video {
   flex-direction: column;
   background-color: #f1f4f9;
   display: flex;
-  /* display: none; */
-
   width: 0px;
   transition: 0.7s;
 }
-
 
 .main_right h6,
 .main_right input,
@@ -94,13 +78,10 @@ video {
   display: none;
 }
 
-
-
 .main_right_two h6,
 .main_right_two i{
   display: none;
 }
-
 
 body.dark-mode .main_right {
   background-color: #3c4043;
@@ -112,10 +93,6 @@ body.dark-mode .main_right_two {
 
 
 .showChat .main_right{
-  /* display: flex;
-  min-width: 375px;
-  max-width: 375px; */
-
   display: flex;
   width: 375px;
   transition:1s;
@@ -123,10 +100,6 @@ body.dark-mode .main_right_two {
 }
 
 .showParticipants .main_right_two {
-  /* display: flex;
-  min-width: 375px;
-  max-width: 375px; */
-
   width: 375px;
   transition: 1s;
   margin: 16px;
@@ -138,13 +111,10 @@ body.dark-mode .main_right_two {
   display: block;
 }
 
-
-
 .showParticipants .main_right_two h6,
 .showParticipants .main_right_two i{
   display: block;
 }
-
 
 .main_videos {
   flex-grow: 1;
