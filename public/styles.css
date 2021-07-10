@@ -67,20 +67,40 @@ video {
 }
 
 .main_right {
-  margin: 16px;
+
   border-radius: 16px;
   flex-direction: column;
   background-color: #f1f4f9;
-  display: none;
+  display: flex;
+  width: 0px;
+  transition: 0.7s;
 }
 
 .main_right_two{
-  margin: 16px;
   border-radius: 16px;
   flex-direction: column;
   background-color: #f1f4f9;
+  display: flex;
+  /* display: none; */
+
+  width: 0px;
+  transition: 0.7s;
+}
+
+
+.main_right h6,
+.main_right input,
+.main_right i{
   display: none;
 }
+
+
+
+.main_right_two h6,
+.main_right_two i{
+  display: none;
+}
+
 
 body.dark-mode .main_right {
   background-color: #3c4043;
@@ -92,18 +112,39 @@ body.dark-mode .main_right_two {
 
 
 .showChat .main_right{
-  display: flex;
-  /* flex: 0.3; */
+  /* display: flex;
   min-width: 375px;
-  max-width: 375px;
+  max-width: 375px; */
+
+  display: flex;
+  width: 375px;
+  transition:1s;
+  margin: 16px;
 }
 
 .showParticipants .main_right_two {
-  display: flex;
-  /* flex: 0.3; */
+  /* display: flex;
   min-width: 375px;
-  max-width: 375px;
+  max-width: 375px; */
+
+  width: 375px;
+  transition: 1s;
+  margin: 16px;
 }
+
+.showChat .main_right h6,
+.showChat .main_right input,
+.showChat .main_right i{
+  display: block;
+}
+
+
+
+.showParticipants .main_right_two h6,
+.showParticipants .main_right_two i{
+  display: block;
+}
+
 
 .main_videos {
   flex-grow: 1;
