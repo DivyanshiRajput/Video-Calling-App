@@ -4,6 +4,8 @@
 
 [https://stormy-retreat-84614.herokuapp.com](https://stormy-retreat-84614.herokuapp.com/)
 
+Preferred browser: Google Chrome
+
 # Feature List
 
 - A user can mute and unmute itself
